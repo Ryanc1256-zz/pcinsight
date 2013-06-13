@@ -5,8 +5,10 @@ $page = Home;
 include('inc/head.inc.php');
 ?>
 
+Hi! I'm body content!
 </div>
-<hr/>
+
+
 
 <?
 include('inc/foot.inc.php');
