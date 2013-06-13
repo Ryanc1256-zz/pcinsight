@@ -1,6 +1,4 @@
-pcinsight
-=========
+website
+=======
 
-pcinsight website....
-
-Source code for pcinsight... 
+This is the repository for pcinsights website
