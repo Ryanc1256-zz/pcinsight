@@ -27,17 +27,26 @@
 		<div id="top">
 			<div id="TopRight">
 				<span id="Notif"></span>
-				<a id="logout" href="../logout.php">Logout</a>
+				<ul>
+					<li>
+						<a id="logout" href="#"><?php echo $_SESSION['email'];?><span class="caret"></span></a>
+						<ul	class="dropDown">	
+							<li><a href="profile.php"> Edit Profile </a></li>
+							<li><a href="../logout.php"> Logout </a></li>
+						</ul>						
+					</li>
+				</ul>
 			</div>
 			<div id="TopLeft">
 				<ul>
+					<li><a href="../index.php"> To website </a></li>
 					<li><a href="index.php"> Home </a></li>
-					<li><a href="#"> Editors </a>
-							<ul class="dropDown">	
-								<li><a href="editors.php"> New Article </a></li>
+					<li><a href="#"> Editors <span class="caret"></span></a>
+						<ul	class="dropDown">	
+							<li><a href="editors.php"> New Article </a></li>
 							<li><a href="review.php"> Review Article </a></li>
-							</ul>						
-					</li>
+						</ul>						
+					</li>					
 				</ul>
 			</div>
 		</div>

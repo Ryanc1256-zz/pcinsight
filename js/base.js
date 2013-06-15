@@ -85,6 +85,11 @@ $(document).ready(function(){
 								{
 									location.href = 'index.php';
 								}
+								else if (data == 'AuthenticationFailed')
+								{
+									shake();
+									$("#login form input:nth-child(2)").css('border', "2px solid red").focus();								
+								}	
 							}				
 						});
 					}
@@ -98,6 +103,8 @@ $(document).ready(function(){
 				{
 					//shake...				
 					shake();
+					$("#login form input:nth-child(1)").css('border', '2px solid red').focus();
+					$("#login form input:nth-child(2)").css('border', '2px solid red');
 					$("#loader").hide();
 				}
 		});

@@ -6,14 +6,14 @@ $(document).ready(function()
 		if (!clicked)
 		{
 			clicked = true;
-			$("#Notifications").show();
-			$("#Notif").css('background', '#fff');
+			$("#Notifications").show();		
+			$("#Notif").css('backgroundPosition', '-41px -53px');
 		}
 		else
 		{
 			clicked = false;
 			$("#Notifications").hide();
-			$("#Notif").css('background', '#323232');
+			$("#Notif").css('backgroundPosition', '9px -53px');			
 		}
 	});
 	$("#TopLeft a").click(function()
@@ -21,11 +21,16 @@ $(document).ready(function()
 		$(this).parent().find("ul").toggle();
 	});
 	
-	$("#submit").click(function()
+	$("#TopRight a").click(function()
+	{
+		$(this).parent().find("ul").toggle();
+	});
+	
+	$("#reviewSubmit").click(function()
 	{
 		$("#loader").show();
-		var texteditorHTML = $("iframe").contents().find("body").html();
-		if (texteditorHTML.length < 1)
+		var texteditorHTML = $("#editor").html();
+		if (texteditorHTML.length < 1 || $("#editorsTitle").text().length < 1)
 		{
 			//error
 			$(".error").text("Your Article has no text in it?");
@@ -35,8 +40,10 @@ $(document).ready(function()
 		else
 		{
 			//so now some ajax stuff...
-			var url = "../scripts/ajax/submitContent.php";
-			var data = "message=" + texteditorHTML; 
+			var url = "../scripts/ajax/ResubmitsubmitContent.php";
+			var id = location.search.replace('?', '').split('=')[1];			
+			var title = $("#editorsTitle").text();
+			var data = "message=" + texteditorHTML + '&id=' + id + "&title=" + title; 
 			$.ajax({
 				type: "POST",
 				data: data,
@@ -44,6 +51,8 @@ $(document).ready(function()
 				success: function(data)
 				{
 					console.log(data);
+					$("#error").html("The article has been submited and you should be able to see it... <a href='../'>Here</a>");
+					$("#error").css('display', 'block');
 					$("#loader").hide();
 				},
 				error: function()
@@ -53,6 +62,69 @@ $(document).ready(function()
 			});
 		}
 	});
+	
+	$("#changeImg").hover(function()
+	{
+		$("#hoveruserimg").css('display', 'inline');		
+	},
+	function()
+	{
+		$("#hoveruserimg").css('display', 'none');	
+	});
+	
+	$("#submit").click(function()
+	{
+		$("#loader").show();
+		var texteditorHTML = $("iframe").contents().find("body").text();		
+		if (texteditorHTML.length < 1 && $("#title").val().length < 1)
+		{
+			//error
+			$("#error").text("Your Article or title has no text in it!");
+			$("#error").css('display', 'block');
+			$("#loader").hide();
+		}
+		else
+		{
+			var tags = $("#tagsHolder").html().replace(/(<([^>]+)>)/ig,"%");
+				tags = tags.split('%');
+				tags = tags.filter(function(e){return e}); 
+			
+			var title = $("#title").val();
+			//so now some ajax stuff...
+			var url = "../scripts/ajax/submitContent.php";
+			var data = "message=" + texteditorHTML + '&tags=' + tags + '&title=' + title; 
+			console.log('submit');
+			$.ajax({
+				type: "POST",
+				data: data,
+				url: url,
+				success: function(data)
+				{
+					$("#error").text("Your article has been submited to an editor");
+					$("#error").css('display', 'block');
+					$("#loader").hide();
+				},
+				error: function()
+				{
+					$("#loader").hide();
+				}			
+			});
+		}
+	});
+	$("#TagInput").keyup(function(e)
+	{
+		var key = e.which;		
+		if (key == 186 || key == 188)
+		{
+			//186 = ;
+			var tag = $("#TagInput").val();
+			tag = tag.substr(0, (tag.length - 1));
+			$("#TagInput").val('');
+			var oldtags = $("#tagsHolder").html();
+			$("#tagsHolder").html(oldtags + '<span>' + tag + '</span>');
+		}
+	});
+	
 	setInterval(getNotifications, 10000);
 	getNotifications(); //starts it off...
 });
@@ -79,6 +151,7 @@ function getNotifications()
 					'</a>',
 				'</li>'].join('\n');
 				$("#notificationInsert").append(addHTML);
+				$("#Notif").css("background-position", '-92px -53px');
 			});
 		}
 	});

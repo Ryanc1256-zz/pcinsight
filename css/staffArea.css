@@ -3,6 +3,9 @@ html, body
 	border: 0;
 	margin: 0;
 	padding: 0;
+	/* Font */
+	font-family: sans-serif, Arial, Verdana, "Trebuchet MS";
+	font-size: 12px;
 }
 
 #top
@@ -21,34 +24,24 @@ html, body
 {
 	background-image: url('../images/sprites.png');
 	background-repeat: no-repeat;
+	background-position: 9px -53px;
 	display: inline-block;
 	width: 45px;
-	height: 45px;
-	background: #000;
-	background-image: -o-linear-gradient(#45484d 0%, #000000 100%); 
-	background-image: -moz-linear-gradient(#45484d 0%, #000000 100%); 
-	background-image: -webkit-linear-gradient(#45484d 0%, #000000 100%); 
-	background-image: -ms-linear-gradient(#45484d 0%, #000000 100%); 	
-	background-image: linear-gradient(#45484d 0%, #000000 100%); 	
-	border-left: 1px solid rgb(a255,255,255,0.1);
-	border-right: 1px solid rgb(a255,255,255,0.1);
+	height: 45px;	
 	background-size: 142px;
-}
-
-#Notif:hover
-{
-	background-color: #323232;	
+	cursor: pointer;
 }
 
 #Notif:active
-{
-	background: #FFFFAB;	
+{	
+	background-position: -41px -53px;
 }
 
 #TopRight
 {
 	float: right;
 	margin-right: 100px;
+	min-width: 240px;
 }
 
 #logout
@@ -62,10 +55,11 @@ html, body
 {
 	position: absolute;
 	top: 45px;
-	right: 45px;
+	right: 153px;
 	width: 260px;
 	background: #fff;
 	max-height: 400px;
+	min-height: 107px;
 	overflow: auto;
 	border: 1px solid #eee;
 	box-shadow: 1px 1px 16px 0 rgba(0,0,0,0.25);
@@ -87,6 +81,7 @@ html, body
 
 #NotificationsTop
 {
+	margin-top: 12px;
 	border-bottom: 1px solid rgba(0,0,0,0.25);
 }
 
@@ -145,26 +140,40 @@ html, body
 	margin-top: 9px;
 }
 
-#TopLeft li
+#TopRight ul
 {
-	float: left;	
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	float: left;
+	margin-top: -9px;
 }
 
-#TopLeft li ul
+#TopRight #Notif
+{
+	float: left;
+}
+
+#TopLeft li, #TopRight li
+{
+	float: left;	
+	margin-top: 5px;
+}
+
+#TopLeft li ul, #TopRight li ul
 {
 	display: none;
 }
 
-#TopLeft li a
+#TopLeft li a, #TopRight li a
 {
 	color: #fff;
 	text-decoration: none;
 	margin: 5px;
-	padding: 16px;
-	background: #000;
+	padding: 16px;	
 }
 
-#TopLeft li ul a
+#TopLeft li ul a, #TopRight li ul a
 {
 	background: #fff;
 	color: #000;
@@ -187,6 +196,7 @@ html, body
 
 .dropDown
 {
+	top: 29px;
 	position: absolute;
 	width: 200px;
 	background: #fff;
@@ -251,4 +261,180 @@ html, body
 .writer:hover
 {
 	background: none;
+}
+
+#contentWrapper
+{
+	margin: 0 auto;
+	width: 900px;
+}
+
+#tags
+{
+	border: 1px solid rgba(0,0,0,0.25);
+	padding: 2px;
+}
+
+#tagsHolder
+{
+	display: inline-block;
+	border: 0;
+}
+
+#TagInput
+{
+	display: inline-block;	
+	border: 0;
+	padding: 7px;
+}
+
+#TagInput:focus
+{	
+	outline: none;	
+}
+
+#tagsHolder span
+{
+	color: #3E6D8E;
+	background-color: #E0EAF1;
+	border-bottom: 1px solid #B3CEE1;
+	border-right: 1px solid #B3CEE1;
+	padding: 3px 4px 3px 4px;
+	margin: 2px 2px 2px 0;
+	text-decoration: none;
+	font-size: 90%;
+	line-height: 2.4;
+	white-space: nowrap;
+}
+
+#acticleHolder
+{
+	max-width: 900px;
+	margin: 0 auto;
+}
+
+#content h1
+{
+	text-align: center;
+}
+
+.success
+{
+	position: absolute;
+	width: 100%;
+	height: 100px;
+	top: 35%;
+}
+
+#titleSpan, #title
+{
+	display: inline-block;
+	margin: 15px;
+}
+
+#title
+{
+	padding: 5px;
+	width: 700px;
+	border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+#error
+{
+	max-width: 900px;
+	margin: 5px auto;
+	background: #eee;
+	border: 1px solid rgba(0,0,0,0.25);
+	display: none;
+	padding: 10px 19px;
+}
+
+.caret
+{
+	border-top-color: #d9d9d9;
+	border-bottom-color: #d9d9d9;
+	display: inline-block;
+	width: 0;
+	height: 0;
+	vertical-align: top;
+	border-top: 4px solid #fff;
+	border-right: 4px solid transparent;
+	border-left: 4px solid transparent;
+	content: "";
+	margin-left: 3px;
+	margin-top: 6px;
+}
+
+ol,ul,dl
+{
+	/* IE7: reset rtl list margin. (#7334) */
+	*margin-right: 0px;
+	/* preserved spaces for list items with text direction other than the list. (#6249,#8049)*/
+	padding: 0 40px;
+}
+
+h1,h2,h3,h4,h5,h6
+{
+	font-weight: normal;
+	line-height: 1.2em;
+}
+
+#NoArticles
+{
+	max-width: 900px;
+	margin: 10px auto;
+	text-align: center;
+	padding: 48px 20px;
+	background: #EEE;
+}
+
+#sadFace
+{
+	font-weight: bold;
+	font-size: 38px;
+	margin-left: 20px;
+}
+
+#hoveruserimg
+{
+	background: rgba(255, 255, 255, 0.81);
+	padding: 10px;
+	border-radius: 2px;
+	position: absolute;
+	margin-left: 50px;
+	margin-top: -155px;
+	display: none;
+}
+
+#changeImg
+{
+	float: left;
+	cursor: pointer;
+}
+
+#infoContent input
+{
+	float: right;
+	clear: right;
+	padding: 5px;
+	width: 330px;
+	border: 1px solid rgba(0, 0, 0, 0.28);
+}
+
+#infoContent 
+{
+	margin-left: 260px;
+}
+
+
+#infoContent label
+{
+	margin: 20px 5px;
+	float: left;
+}
+
+#EmailLabelContent 
+{
+	margin-top: 18px;
+	float: left;
 }

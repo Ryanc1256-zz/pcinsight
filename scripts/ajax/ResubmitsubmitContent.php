@@ -14,21 +14,18 @@
 	
 	if (strlen($message) < 1)
 	{
-		echo "NoMessgaeContent";
+		echo "NoMessageContent";
 		exit;
 	}
-	$tags = "";
-	if (!(empty($_POST['tags'])))
+	
+	if (strlen($_POST['title']) < 1)
 	{
-		$tags = $_POST['tags'];
-	}
-	//now we can just submit it to the server...
-	if (empty($_POST['title']))
-	{
-		echo 'no title';
+		echo "NoTitleContent";
 		exit;
 	}
+	
 	$title = $_POST['title'];
+	//now we can just submit it to the server...
 	
 	require_once('../required/login.php');
 	$db = new mysqli($dbhost,$dbuser,$dbpass,$dbname);
@@ -36,9 +33,10 @@
    {
 		echo "Failed to connect to MySQL: " . mysqli_connect_error();
    }
-   $date = date('Ymd');  
-   ($stmt = $db->prepare("INSERT INTO Articles (articletext, writer, editorsTick, date, tags, title) values (?, ?, 0, $date, ?, ?)"))|| fail('MySQL prepare', $db->error);
-		$stmt->bind_param('ssss', $message, $email, $tags, $title)|| fail('MySQL bind_param', $db->error);
+   $date = date('d/m/y');  
+   $id = $_POST['id'];
+   ($stmt = $db->prepare("UPDATE Articles SET articletext=?, editorsTick=1, title=? WHERE id=$id"))|| fail('MySQL prepare', $db->error);
+		$stmt->bind_param('ss', $message, $title)|| fail('MySQL bind_param', $db->error);
 		$stmt->execute()|| fail('MySQL execute', $db->error);
 	
 	$debug = false;

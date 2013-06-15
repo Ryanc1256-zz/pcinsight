@@ -24,10 +24,10 @@
 	require_once('required/PasswordHash.php');
 	$staff = '0';
 	$hash = '*';
-	($stmt = $db->prepare('Select password, staff FROM users WHERE email = ?'))|| fail('MySQL prepare', $db->error);
+	($stmt = $db->prepare('Select password, staff, UserID FROM users WHERE email = ?'))|| fail('MySQL prepare', $db->error);
 	$stmt->bind_param('s', $_POST['email'])|| fail('MySQL bind_param', $db->error);
 	$stmt->execute()|| fail('MySQL execute', $db->error);	
-	$stmt->bind_result($hash, $staff)|| fail('MySQL bind_result', $db->error);
+	$stmt->bind_result($hash, $staff, $id)|| fail('MySQL bind_result', $db->error);
 	if (!$stmt->fetch() && $db->errno)
 		fail('MySQL fetch', $db->error);	
 		
@@ -37,7 +37,7 @@
 		session_start();
 		$_SESSION['email'] = $_POST['email'];		
 		$_SESSION['staff'] = $staff;
-				
+		$_SESSION['UserID'] = $id;		
 	} else {
 		$what = 'AuthenticationFailed';
 	}

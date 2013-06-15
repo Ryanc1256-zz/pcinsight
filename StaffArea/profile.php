@@ -13,6 +13,17 @@
 	{
 			header('location: ../index.php');
 	}
+	
+	require_once('../scripts/required/login.php');
+	$db = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
+	$id = $_SESSION['UserID'];
+	$accountDetails = mysqli_query($db, "SELECT email, username, userProfile FROM users WHERE UserID=$id");
+	while ($row = mysqli_fetch_array($accountDetails))
+	{
+		$username = $row['username'];
+		$email = $row['email'];
+		$userProfile = $row['userProfile'];
+	}
 ?>
 <!doctype html>
 <html lang="en">
@@ -54,23 +65,19 @@
 			<h1> Welcome staff </h1>
 			<span id="error"></span>
 			<div id="contentWrapper">
-				<span id="titleSpan"> Title: </span>
-				<input type="text" name="title" id="title" />
-				<div id="ckedit">
-					<textarea id="ckeditor"></textarea>
-				</div>
-				<script type="text/javascript">
-					CKEDITOR.replace( 'ckeditor', {
-						fullPage: false,
-						allowedContent: true
-					});
-				</script>
-				<p> Tags </p>
-				<div id="tags">						
-					<div id="tagsHolder"></div>
-					<input type="text" id="TagInput" />
-				</div>
-				<button id="submit">Submit</button>
+					<div id="changeImg">
+						<img src="<?php echo $userProfile; ?>" width="200" height="267"/>
+						<span id="hoveruserimg"> Click to change </span>
+					</div>
+					<div id="infoContent">
+						<form>
+							<label for="InfoUserName">Username:</label>
+							<input type="text" name="username" id="InfoUserName" value="<?php echo $username ?>"/>
+							<br />
+							<label for="InfoEmail" id="EmailLabelContent">Email:</label>
+							<input type="text" name="email" id="InfoEmail" value="<?php echo $email ?>"/>							
+						</form>
+					</div>
 			</div>
 		</div>
 		<span id="loader"></span>
