@@ -1,15 +1,1 @@
-[15-Jun-2013 04:07:33] PHP Warning:  mysqli_connect() [<a href='function.mysqli-connect'>function.mysqli-connect</a>]: (08004/1040): Too many connections in /home/karl/public_html/pcinsight/scripts/ajax/notificationsGET.php on line 5
-[15-Jun-2013 04:07:33] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, boolean given in /home/karl/public_html/pcinsight/scripts/ajax/notificationsGET.php on line 10
-[15-Jun-2013 04:07:33] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, null given in /home/karl/public_html/pcinsight/scripts/ajax/notificationsGET.php on line 12
-[15-Jun-2013 04:07:43] PHP Warning:  mysqli_connect() [<a href='function.mysqli-connect'>function.mysqli-connect</a>]: (08004/1040): Too many connections in /home/karl/public_html/pcinsight/scripts/ajax/notificationsGET.php on line 5
-[15-Jun-2013 04:07:43] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, boolean given in /home/karl/public_html/pcinsight/scripts/ajax/notificationsGET.php on line 10
-[15-Jun-2013 04:07:43] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, null given in /home/karl/public_html/pcinsight/scripts/ajax/notificationsGET.php on line 12
-[15-Jun-2013 04:07:54] PHP Warning:  mysqli_connect() [<a href='function.mysqli-connect'>function.mysqli-connect</a>]: (08004/1040): Too many connections in /home/karl/public_html/pcinsight/scripts/ajax/notificationsGET.php on line 5
-[15-Jun-2013 04:07:54] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, boolean given in /home/karl/public_html/pcinsight/scripts/ajax/notificationsGET.php on line 10
-[15-Jun-2013 04:07:54] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, null given in /home/karl/public_html/pcinsight/scripts/ajax/notificationsGET.php on line 12
-[15-Jun-2013 04:08:04] PHP Warning:  mysqli_connect() [<a href='function.mysqli-connect'>function.mysqli-connect</a>]: (08004/1040): Too many connections in /home/karl/public_html/pcinsight/scripts/ajax/notificationsGET.php on line 5
-[15-Jun-2013 04:08:04] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, boolean given in /home/karl/public_html/pcinsight/scripts/ajax/notificationsGET.php on line 10
-[15-Jun-2013 04:08:04] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, null given in /home/karl/public_html/pcinsight/scripts/ajax/notificationsGET.php on line 12
-[15-Jun-2013 04:09:07] PHP Warning:  mysqli_connect() [<a href='function.mysqli-connect'>function.mysqli-connect</a>]: (08004/1040): Too many connections in /home/karl/public_html/pcinsight/scripts/ajax/notificationsGET.php on line 5
-[15-Jun-2013 04:09:07] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, boolean given in /home/karl/public_html/pcinsight/scripts/ajax/notificationsGET.php on line 10
-[15-Jun-2013 04:09:07] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, null given in /home/karl/public_html/pcinsight/scripts/ajax/notificationsGET.php on line 12
+Empty
