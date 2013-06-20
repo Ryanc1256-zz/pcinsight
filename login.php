@@ -37,5 +37,6 @@
 			</ul>
 			<p> Copyright &copy; 2013 </p>
 		</div>
+		 <script src="https://apis.google.com/js/client.js"></script>
 	</body>
 </html>

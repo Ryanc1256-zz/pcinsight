@@ -40,14 +40,34 @@
 			</div>
 			<div id="TopLeft">
 				<ul>
-					<li><a href="../index.php"> To website </a></li>
+					<li><a href="../index.php"> To website. </a></li>
 					<li><a href="index.php"> Home </a></li>
 					<li><a href="#"> Editors <span class="caret"></span></a>
 						<ul	class="dropDown">	
 							<li><a href="editors.php"> New Article </a></li>
 							<li><a href="review.php"> Review Article </a></li>
 						</ul>						
-					</li>					
+					</li>	
+					<?php
+						require_once('../scripts/required/login.php');
+						$db = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
+						if (mysqli_connect_errno($con))
+						{
+							echo "Failed to connect to MySQL: " . mysqli_connect_error();
+						}
+						$id = $_SESSION['UserID'];
+						$query = mysqli_query($db, "SELECT admin FROM users WHERE UserID=$id");	
+						$query = mysqli_fetch_array($query);
+						mysqli_close($db);
+						if ($query['admin'] == '1'){
+						echo '<li><a href="#"> Moderators <span class="caret"></span></a>
+							<ul	class="dropDown">	
+								<li><a href="users.php"> Users </a></li>
+								<li><a href="articles.php"> Articles </a></li>
+							</ul>						
+						</li>';
+					}
+					?>					
 				</ul>
 			</div>
 		</div>
@@ -58,9 +78,9 @@
 				require_once('../scripts/required/login.php');
 				$db = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
 				if (mysqli_connect_errno($con))
-			   {
+				{
 					echo "Failed to connect to MySQL: " . mysqli_connect_error();
-			   }
+				}
 				if (empty($_GET['reviewid']))
 				{					//so he hasn't clicked on a article to review... hmmm... okay...
 					
@@ -74,7 +94,7 @@
 					{
 						$click = "<a class='article' href='?reviewid=".$row['id']."'>";
 							$click .= '<h3>'. $row['title'] . '</h3>';
-							$click .= $row['articletext'];
+							$click .=  urldecode($row['articletext']);
 							$click .= "<span class='writer'>".$row['writer']."</span>";
 						$click .= "</a>";
 						echo $click;
@@ -88,16 +108,30 @@
 				
 				   while ($row = mysqli_fetch_array($query))
 					{
+						$message = urldecode($row['articletext']);
 						$click = '<h3 contenteditable="true" id="editorsTitle">'. $row['title'] . '</h3>';
 						$click .= "<div class='article' id='editor' contenteditable='true'>";
-						$click .= $row['articletext'];							
+						$click .= $message;							
 						$click .= "</div>";
 						$click .= "<div id='tagsHolder'>";
-						$exp = explode(',', $row['tags']);						
-						foreach ($exp as $index)
+						$exp = explode(',', $row['tags']);	
+						if (strlen($row['tags']) > 1)
 						{
-							$click .="<span>$index</span>";
+							if (count($exp) > 0)
+							{					
+								foreach ($exp as $index)
+								{
+									$click .="<span>$index</span>";
+								}
+							}
 						}
+						else
+						{							
+							$click .="<span id='NoTag'>No Tags</span>";
+						}
+						$click .= "</div>";
+						$click .= "<div class='writer'>";
+						$click .= "<p>".$row['writer']."</p>";
 						$click .= "</div>";
 						echo $click;
 					}

@@ -52,6 +52,17 @@
 		($stmt = $db->prepare('INSERT INTO users (username, password, email, staff, socialnetwork) values (?, ?, ?, false, false)'))|| fail('MySQL prepare', $db->error);
 		$stmt->bind_param('sss', $_POST['username'], $hash, $_POST['email'])|| fail('MySQL bind_param', $db->error);
 		$stmt->execute()|| fail('MySQL execute', $db->error);
+		
+		/*
+		$to = $_POST['email'];
+		$subject = 'Pcinsight register';
+		$headers = "From: Admin@pcinsight.co.nz \r\n";		
+		$headers .= "MIME-Version: 1.0\r\n";
+		$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+		$message = '<html><body>';
+		$message .= "<div><p> Please click here </p></div>";
+		$message .= "</body></html>";
+		mail($to, $subject, $message, $headers);*/
 	}
 	else
 	{

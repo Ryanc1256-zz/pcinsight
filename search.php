@@ -74,7 +74,7 @@
 				clear: both;
 			}
 			
-			.tagsHolder a
+			#tagsHolder a
 			{
 				color: #3E6D8E;
 				background-color: #E0EAF1;
@@ -212,42 +212,19 @@
 			<div id="searchHolder">
 				<form action="search.php" method="POST">
 					<label for="search">Search</label>
-					<input type="text" name="search" id="search" />
+					<input type="text" id="search" />
 					<input type="submit" value="search" />
 				</form>
 			</div>
 		</div>
 		<h1 id="heading"> Welcome to PC Insight </h1>
 		<div id="innerWrapper">
-			<div id="articles">
-				<div id="imageSlider">
-					<div id="imageWrapper">
-						<div class="image">
-							<img src="http://images.anandtech.com/doci/6963/DSC02077_678x452.JPG" />
-							<span>
-								<h2>BenQ XL2720T Gaming Monitor Reviewed</h2>
-								<p> Ryan Clough </p>
-							</span>
-						</div>
-					</div>
-					<div id="Controls">
-					
-					</div>			
-				</div>
+			<div id="articles">			
 				<?php
-					require_once('scripts/include/articles.php');
+					//search
+					echo $_POST['search'];
 				?>	
-			</div>
-			<div id="news">
-				<div id="newsHeader">
-					<h2> News </h2>
-				</div>
-				<div id="newsHolder">
-					<div class="news">
-						<p> Battlefield 4 has been revealed! </p>
-					</div>
-				</div>
-			</div>			
+			</div>				
 		</div>
 		<div id="footer">
 			<p> copyright &copy; <?php echo date(Y);?></p>

@@ -46,37 +46,53 @@
 							<li><a href="editors.php"> New Article </a></li>
 							<li><a href="review.php"> Review Article </a></li>
 						</ul>						
-					</li>
-					<?php
-						require_once('../scripts/required/login.php');
-						$db = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
-						if (mysqli_connect_errno($con))
-						{
-							echo "Failed to connect to MySQL: " . mysqli_connect_error();
-						}
-						$id = $_SESSION['UserID'];
-						$query = mysqli_query($db, "SELECT admin FROM users WHERE UserID=$id");	
-						$query = mysqli_fetch_array($query);
-						mysqli_close($db);
-						if ($query['admin'] == '1'){
-						echo '<li><a href="#"> Moderators <span class="caret"></span></a>
-							<ul	class="dropDown">	
-								<li><a href="users.php"> Users </a></li>
-								<li><a href="articles.php"> Articles </a></li>
-							</ul>						
-						</li>';
-					}
-					?>
+					</li>	
+					<li><a href="#"> Moderators <span class="caret"></span></a>
+						<ul	class="dropDown">	
+							<li><a href="users.php"> Users </a></li>
+							<li><a href="articles.php"> Articles </a></li>
+						</ul>						
+					</li>	
 				</ul>
 			</div>
 		</div>
 		<div id="content">
-			<h1> Welcome staff </h1>
-			<div id="genralNotifications">
-			
-			</div>
-			<div id="articles">
-			
+			<h1> Welcome Moderators </h1>
+			<div id="users">
+				<table>
+					<tr>
+						<td> Writer </td>
+						<td> Title </td>
+						<td> Seen by an Editor </td>
+						<td> Delete item </td>					
+					</tr>
+				<?php
+					require_once('../scripts/required/login.php');
+					$db = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
+					if (mysqli_connect_errno($con))
+					{
+						echo "Failed to connect to MySQL: " . mysqli_connect_error();
+					}
+					$query = mysqli_query($db, "SELECT * FROM Articles");						
+					while ($row = mysqli_fetch_array($query))
+					{		
+						if ($row['editorsTick'] == "1")
+							$editorsTick = "Yes";
+						else
+							$editorsTick = "No";
+						$id = $row['id'];
+						$data = '<tr>';						
+							$data .= "<td>".$row['writer']."</td>";	
+							$data .= "<td>".$row['title']."</td>";	
+							$data .= "<td>".$editorsTick."</td>";							
+							$data .= "<td><a href='../scripts/deleteArticle.php?articleid=$id' class='button'>Delete</a></td>";	
+						$data .= '</tr>';
+						
+						echo $data;
+					}
+					mysqli_close($db);
+				?>
+				</table>
 			</div>
 		</div>
 		<div id="Notifications">

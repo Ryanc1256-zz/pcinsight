@@ -50,14 +50,28 @@
 			</div>
 			<div id="TopLeft">
 				<ul>
-					<li><a href="../index.php"> To website </a></li>
+					<li><a href="../index.php"> To website. </a></li>
 					<li><a href="index.php"> Home </a></li>
 					<li><a href="#"> Editors <span class="caret"></span></a>
 						<ul	class="dropDown">	
 							<li><a href="editors.php"> New Article </a></li>
 							<li><a href="review.php"> Review Article </a></li>
 						</ul>						
-					</li>					
+					</li>	
+					<?php						
+						$id = $_SESSION['UserID'];
+						$query = mysqli_query($db, "SELECT admin FROM users WHERE UserID=$id");	
+						$query = mysqli_fetch_array($query);
+						mysqli_close($db);
+						if ($query['admin'] == '1'){
+						echo '<li><a href="#"> Moderators <span class="caret"></span></a>
+							<ul	class="dropDown">	
+								<li><a href="users.php"> Users </a></li>
+								<li><a href="articles.php"> Articles </a></li>
+							</ul>						
+						</li>';
+					}
+					?>
 				</ul>
 			</div>
 		</div>
@@ -75,9 +89,36 @@
 							<input type="text" name="username" id="InfoUserName" value="<?php echo $username ?>"/>
 							<br />
 							<label for="InfoEmail" id="EmailLabelContent">Email:</label>
-							<input type="text" name="email" id="InfoEmail" value="<?php echo $email ?>"/>							
+							<input type="text" name="email" id="InfoEmail" value="<?php echo $email ?>"/>
+							<input type="submit" id="SubmitProfile" value="Update your profile" />						
 						</form>
 					</div>
+			</div>
+		</div>
+		<div id="FileUploader">
+			<h2> Upload a file </h2>
+			<div id="innerDropZone">
+				<div id="DropZoneCenter">
+					<div id="DropZoneText">
+						<span></span>
+						<h2> Drag a photo here </h2>
+						<p> or click to select photos from your computer </p>	
+					</div>					
+				</div>
+				<div id="DropZoneProgress" style="display: none">
+					<div id="progress">
+						<span></span>
+					</div>
+				</div>
+				<input type="file" style="height: 82%; width: 100%; opacity: 0.0; z-index: 999; position: absolute;"/>
+			</div>
+			<div id="actionBar">
+				<button id="startUpload" class="blue">
+					<span class="label">Start Upload</span>
+				</button>
+				<button id="cancelUpload">
+					<span class="label">Cancel Upload</span>
+				</button>
 			</div>
 		</div>
 		<span id="loader"></span>

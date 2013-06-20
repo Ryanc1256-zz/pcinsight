@@ -39,14 +39,34 @@
 			</div>
 			<div id="TopLeft">
 				<ul>
-					<li><a href="../index.php"> To website </a></li>
+					<li><a href="../index.php"> To website. </a></li>
 					<li><a href="index.php"> Home </a></li>
 					<li><a href="#"> Editors <span class="caret"></span></a>
 						<ul	class="dropDown">	
 							<li><a href="editors.php"> New Article </a></li>
 							<li><a href="review.php"> Review Article </a></li>
 						</ul>						
-					</li>					
+					</li>
+					<?php
+						require_once('../scripts/required/login.php');
+						$db = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
+						if (mysqli_connect_errno($con))
+						{
+							echo "Failed to connect to MySQL: " . mysqli_connect_error();
+						}
+						$id = $_SESSION['UserID'];
+						$query = mysqli_query($db, "SELECT admin FROM users WHERE UserID=$id");	
+						$query = mysqli_fetch_array($query);
+						mysqli_close($db);
+						if ($query['admin'] == '1'){
+						echo '<li><a href="#"> Moderators <span class="caret"></span></a>
+							<ul	class="dropDown">	
+								<li><a href="users.php"> Users </a></li>
+								<li><a href="articles.php"> Articles </a></li>
+							</ul>						
+						</li>';
+					}
+					?>
 				</ul>
 			</div>
 		</div>

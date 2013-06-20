@@ -28,7 +28,7 @@
 		echo 'no title';
 		exit;
 	}
-	$title = $_POST['title'];
+	$title = $_POST['title'];	
 	
 	require_once('../required/login.php');
 	$db = new mysqli($dbhost,$dbuser,$dbpass,$dbname);
@@ -36,7 +36,9 @@
    {
 		echo "Failed to connect to MySQL: " . mysqli_connect_error();
    }
-   $date = date('Ymd');  
+   $message = urlencode($message);
+   
+  $date = date('Ymd');  
    ($stmt = $db->prepare("INSERT INTO Articles (articletext, writer, editorsTick, date, tags, title) values (?, ?, 0, $date, ?, ?)"))|| fail('MySQL prepare', $db->error);
 		$stmt->bind_param('ssss', $message, $email, $tags, $title)|| fail('MySQL bind_param', $db->error);
 		$stmt->execute()|| fail('MySQL execute', $db->error);

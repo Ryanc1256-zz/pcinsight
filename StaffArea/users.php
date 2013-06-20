@@ -46,37 +46,56 @@
 							<li><a href="editors.php"> New Article </a></li>
 							<li><a href="review.php"> Review Article </a></li>
 						</ul>						
-					</li>
-					<?php
-						require_once('../scripts/required/login.php');
-						$db = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
-						if (mysqli_connect_errno($con))
-						{
-							echo "Failed to connect to MySQL: " . mysqli_connect_error();
-						}
-						$id = $_SESSION['UserID'];
-						$query = mysqli_query($db, "SELECT admin FROM users WHERE UserID=$id");	
-						$query = mysqli_fetch_array($query);
-						mysqli_close($db);
-						if ($query['admin'] == '1'){
-						echo '<li><a href="#"> Moderators <span class="caret"></span></a>
-							<ul	class="dropDown">	
-								<li><a href="users.php"> Users </a></li>
-								<li><a href="articles.php"> Articles </a></li>
-							</ul>						
-						</li>';
-					}
-					?>
+					</li>	
+					<li><a href="#"> Moderators <span class="caret"></span></a>
+						<ul	class="dropDown">	
+							<li><a href="users.php"> Users </a></li>
+							<li><a href="articles.php"> Articles </a></li>
+						</ul>						
+					</li>	
 				</ul>
 			</div>
 		</div>
 		<div id="content">
-			<h1> Welcome staff </h1>
-			<div id="genralNotifications">
-			
-			</div>
-			<div id="articles">
-			
+			<h1> Welcome Moderators </h1>
+			<div id="users">
+				<table>
+					<tr>
+						<td> Username </td>
+						<td> Email </td>
+						<td> Staff </td>					
+					</tr>
+				<?php
+					require_once('../scripts/required/login.php');
+					$db = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
+					if (mysqli_connect_errno($con))
+					{
+						echo "Failed to connect to MySQL: " . mysqli_connect_error();
+					}
+					$query = mysqli_query($db, "SELECT * FROM users");						
+					while ($row = mysqli_fetch_array($query))
+					{
+						$username = $row['username'];
+						$email = $row['email'];
+						$staff = $row['staff'];
+						if ($staff == "1")
+							$staff = "yes";
+						else
+							$staff = "No";
+							
+						$data = '<tr>';						
+							$data .= "<td>".$username."</td>";
+							$data .= "<td>".$email."</td>";
+							$data .= "<td>".$staff."</td>";
+							$data .= "<td><button>Edit User</button></td>";
+							$data .= "<td><button>Delete User</button></td>";
+						$data .= '</tr>';
+						
+						echo $data;
+					}
+					mysqli_close($db);
+				?>
+				</table>
 			</div>
 		</div>
 		<div id="Notifications">

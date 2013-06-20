@@ -89,7 +89,11 @@ $(document).ready(function(){
 								{
 									shake();
 									$("#login form input:nth-child(2)").css('border', "2px solid red").focus();								
-								}	
+								}
+								else
+								{
+									shake();
+								}
 							}				
 						});
 					}
@@ -164,8 +168,25 @@ function getEmail(){
 	});
 }
 
-function getEmailCallback(obj){
-	var el = document.getElementById('email');
-	var email = '';
-	console.log(obj);   // Uncomment to inspect the full object.				
+function getEmailCallback(obj){	
+	var email = obj.email;
+	var username;
+	gapi.client.load('plus', 'v1', function() {       
+          var request = gapi.client.plus.people.get({
+            'userId': 'me'
+          });        
+          request.execute(function(resp) {
+			//hmm we have the infomation now... hmm
+            username = resp.displayName;
+          });
+        });
+	//okay now send the data to our server and log him in...
+	$.ajax({
+		data: 'username='+username+"&email="+email,
+		url: "scripts/ajaxlogin.php?socialnetwork=true",
+		type: 'POST',
+		success: function(data){
+			console.log(data);
+		}
+	});
 }
