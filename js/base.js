@@ -29,6 +29,7 @@ $(document).ready(function(){
 								success: function(data)
 								{
 									$("#loader").hide();
+									console.log(data);
 									if (data == "emailTaken")
 									{
 										$("#login form input:nth-child(2)").css('border', '2px solid red');
@@ -79,8 +80,7 @@ $(document).ready(function(){
 							url: 'scripts/ajaxlogin.php',
 							success: function(data)
 							{
-								$("#loader").hide();
-								console.log(data);
+								$("#loader").hide();								
 								if (data == 'AuthenticationSucceeded')
 								{
 									location.href = 'index.php';
@@ -94,7 +94,12 @@ $(document).ready(function(){
 								{
 									shake();
 								}
-							}				
+								console.log(data);
+							},
+							error: function(data)
+							{
+								alert('error');
+							}
 						});
 					}
 					else
@@ -146,6 +151,8 @@ window.onresize = function()
 	});	
 }
 
+
+/*
 //google functions
 function loginFinishedCallback(authResult) {
 	if (authResult) {
@@ -190,3 +197,5 @@ function getEmailCallback(obj){
 		}
 	});
 }
+
+*/

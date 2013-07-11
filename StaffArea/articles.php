@@ -64,6 +64,7 @@
 						<td> Writer </td>
 						<td> Title </td>
 						<td> Seen by an Editor </td>
+						<td> Edit an item </td>
 						<td> Delete item </td>					
 					</tr>
 				<?php
@@ -84,8 +85,9 @@
 						$data = '<tr>';						
 							$data .= "<td>".$row['writer']."</td>";	
 							$data .= "<td>".$row['title']."</td>";	
-							$data .= "<td>".$editorsTick."</td>";							
-							$data .= "<td><a href='../scripts/deleteArticle.php?articleid=$id' class='button'>Delete</a></td>";	
+							$data .= "<td>".$editorsTick."</td>";	
+							$data .= "<td><a href='review.php?reviewid=$id' class='button'>Edit</a></td>";	
+							$data .= "<td><a href='../scripts/deleteArticle.php?articleid=$id' class='button'>Delete</a></td>";								
 						$data .= '</tr>';
 						
 						echo $data;

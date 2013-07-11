@@ -71,7 +71,7 @@
 					if (mysqli_connect_errno($con))
 					{
 						echo "Failed to connect to MySQL: " . mysqli_connect_error();
-					}
+					}					
 					$query = mysqli_query($db, "SELECT * FROM users");						
 					while ($row = mysqli_fetch_array($query))
 					{
@@ -82,13 +82,18 @@
 							$staff = "yes";
 						else
 							$staff = "No";
+						if ($row['emailCheck'] == "1")
+							$emailCheck = "yes";
+						else
+							$emailCheck = "no";
 							
 						$data = '<tr>';						
 							$data .= "<td>".$username."</td>";
 							$data .= "<td>".$email."</td>";
 							$data .= "<td>".$staff."</td>";
-							$data .= "<td><button>Edit User</button></td>";
-							$data .= "<td><button>Delete User</button></td>";
+							$data .= "<td>".$emailCheck."</td>";
+							$data .= "<td><a href='editusers.php?userID=".$row['UserID']."' class='button'>Edit User</a></td>";
+							$data .= "<td><a href='#' class='button red'><span class='label'>Delete Users</span></a></td>";
 						$data .= '</tr>';
 						
 						echo $data;

@@ -19,6 +19,7 @@
 	<head>
 		<title> PC Insight Staff Area</title>
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 		<script src="../js/staffArea.js"></script>
 		<script src="../ckeditor/ckeditor.js"></script>
 		<link rel="stylesheet" type="text/css" href="../css/staffArea.css" />		
@@ -49,14 +50,16 @@
 					</li>
 					<?php
 						require_once('../scripts/required/login.php');
-						$db = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
+						
+						$db = new mysqli($dbhost,$dbuser,$dbpass,$dbname);
 						if (mysqli_connect_errno($con))
 						{
-							echo "Failed to connect to MySQL: " . mysqli_connect_error();
+							echo "<div id='NoArticles'>Database connection error...<span id='sadFace'>:(</span></div>";	
+							exit;
 						}
 						$id = $_SESSION['UserID'];
-						$query = mysqli_query($db, "SELECT admin FROM users WHERE UserID=$id");	
-						$query = mysqli_fetch_array($query);
+						$query = $db->query("SELECT admin FROM users WHERE UserID=$id");	
+						$query = $query->fetch_array();
 						mysqli_close($db);
 						if ($query['admin'] == '1'){
 						echo '<li><a href="#"> Moderators <span class="caret"></span></a>
@@ -89,6 +92,9 @@
 				<div id="tags">						
 					<div id="tagsHolder"></div>
 					<input type="text" id="TagInput" />
+				</div>
+				<div id="date">
+					<input type="datetime-local" id="datePicker" placeholder="dd-mm-yy"/>
 				</div>
 				<button id="submit">Submit</button>
 			</div>

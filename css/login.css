@@ -1,0 +1,155 @@
+body, html
+{
+	margin: 0;
+	padding: 0;
+	background: #646472;
+	font-family: Arial, "sans serif";
+}
+
+
+#login
+{				
+	position: absolute;					
+	min-width: 300px;
+	min-height: 300px;
+	max-width: 500px;
+	background: white;
+	padding: 10px;
+	border-radius: 6px;
+	box-shadow: 5px 5px 12px 0 rgba(0,0,0,0.25);
+	text-align: center;
+	z-index:999999;
+	border: 1px solid #000;
+}
+
+form input[type="text"], form input[type="password"]
+{
+	width: 300px;
+	height: 25px;
+	margin-bottom: 10px;
+	border-radius: 4px;
+	border: 1px solid rgba(0,0,0,0.55);
+	box-shadow: inset 1px 1px 5px 0px rgba(0,0,0,0.15);
+	padding: 3px;	
+	font-size: 22px;
+}		
+
+form a
+{
+	float: right;
+	margin-right: 20px;					
+}	
+
+input[type="submit"]
+{
+	clear: both;
+	display: block;
+	border: 1px solid #c9a7ff;
+	background-color: #745cff;
+	/* Different Vendor prefixes */
+	background-image: -webkit-linear-gradient(#745cff 0%, #140bff 100%);	
+	background-image: -moz-linear-gradient(#745cff 0%, #140bff 100%);
+	background-image: -ms-linear-gradient(#745cff 0%, #140bff 100%);
+	background-image: -o-linear-gradient(#745cff 0%, #140bff 100%);
+	background-image: linear-gradient(#745cff 0%, #140bff 100%);
+	border-radius: 6px;
+	padding: 10px 20px;
+	text-decoration: none;
+	color: #fff;
+	cursor: pointer;
+	margin-left: 330px
+}	
+
+input[type="submit"]:hover
+{				
+	background-color: #745cff;
+	/* Different Vendor prefixes */
+	background-image: -webkit-linear-gradient(#745cff 0%, #140bff 100%);	
+	background-image: -moz-linear-gradient(#745cff 0%, #140bff 100%);
+	background-image: -ms-linear-gradient(#745cff 0%, #140bff 100%);
+	background-image: -o-linear-gradient(#745cff 0%, #140bff 100%);
+	background-image: linear-gradient(#3816FA 0%, #6D67FF 100%)			
+}	
+
+#errorMessage
+{
+	background: #BDBABA;
+	padding: 10px;
+	display: none;	
+}
+
+#nav, #navigation
+{
+	float: left;
+	margin: 25px 0 0 25px;
+}
+
+#footer ul
+{	
+	list-style: none;
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+}
+
+#footer li ,#navigation li
+{
+	float: left;
+	margin: 10px;	
+}
+
+#footer li a, #nav, #navigation li a
+{
+	color: #fff;
+	background: rgba(0,0,0,0.25);
+	padding: 5px 10px;
+	border-radius: 6px;
+	-webkit-transition: .1s linear;
+	-moz-transition: .1s linear;	
+	transition: .1s linear;
+	
+}
+
+#register
+{
+	float: left;
+	margin: -37px 0 0 100px;
+}
+
+
+#footer li a:hover, #nav:hover, #navigation li a:hover
+{	
+	background: none;
+}
+
+#footer p
+{
+	text-align: center;
+	color: #fff;	
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
+}
+
+#loader
+{
+	background-image: url('../images/ajax.gif');
+	background-repeat: no-repeat;	
+	height: 34px;
+	width: 34px;	
+	display: none;
+	position: absolute;
+	bottom: 6px;
+	left: 6px;
+}
+
+#navigation
+{
+	list-style: none;	
+	padding: 0;
+}
+
+
+
+
+

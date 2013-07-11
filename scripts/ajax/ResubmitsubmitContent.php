@@ -33,10 +33,12 @@
    {
 		echo "Failed to connect to MySQL: " . mysqli_connect_error();
    }
+   $tags = $_POST['tags'];
+   $tags = str_replace('%', ',', $tags);  
    $date = date('d/m/y');  
    $id = $_POST['id'];
-   ($stmt = $db->prepare("UPDATE Articles SET articletext=?, editorsTick=1, title=? WHERE id=$id"))|| fail('MySQL prepare', $db->error);
-		$stmt->bind_param('ss', $message, $title)|| fail('MySQL bind_param', $db->error);
+   ($stmt = $db->prepare("UPDATE Articles SET articletext=?, editorsTick=1, title=?, tags=? WHERE id=$id"))|| fail('MySQL prepare', $db->error);
+		$stmt->bind_param('sss', $message, $title, $tags)|| fail('MySQL bind_param', $db->error);
 		$stmt->execute()|| fail('MySQL execute', $db->error);
 	
 	$debug = false;

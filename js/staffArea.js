@@ -19,13 +19,44 @@ $(document).ready(function()
 		}
 	});
 	$("#TopLeft a").click(function()
-	{
-		$(this).parent().find("ul").toggle();
+	{		
+		if ($(this).parent().attr('class') != "showing")
+		{
+			$(".showing").find("ul").hide();
+			$(".showing").removeClass('showing');
+			$(this).parent().find("ul").toggle();
+			$(this).parent().addClass('showing');
+		}
+		else
+		{
+			$(this).parent().find("ul").toggle();			
+		}
 	});
 	
+	/*$("body").click(function()
+	{		
+		$(".showing").find("ul").hide();
+		$(".showing").removeClass('showing');
+	});*/
+	
 	$("#TopRight a").click(function()
+	{	
+		if ($(this).parent().attr('class') != "showing")
+		{
+			$(".showing").find("ul").hide();
+			$(".showing").removeClass('showing');
+			$(this).parent().find("ul").toggle();
+			$(this).parent().addClass('showing');
+		}
+		else
+		{
+			$(this).parent().find("ul").toggle();
+		}
+	});
+	
+	$("#top a").click(function()
 	{
-		$(this).parent().find("ul").toggle();
+		//$("#TopLeft a").parent().find("ul").hide();
 	});
 	
 	$("#reviewSubmit").click(function()
@@ -45,8 +76,11 @@ $(document).ready(function()
 			var url = "../scripts/ajax/ResubmitsubmitContent.php";
 			var id = location.search.replace('?', '').split('=')[1];			
 			var title = $("#editorsTitle").text();
+			var tags = $("#tagsHolder div").text().replace(/x/gi, "%");
+				tags = tags.substr(0, (tags.length-1));
 			texteditorHTML = encodeURIComponent(texteditorHTML);
-			var data = "message=" + texteditorHTML + '&id=' + id + "&title=" + title; 
+			var data = "message=" + texteditorHTML + '&id=' + id + "&title=" + title + '&tags=' + tags; 
+			console.log(tags);
 			$.ajax({
 				type: "POST",
 				data: data,
@@ -126,17 +160,16 @@ $(document).ready(function()
 		}
 		else
 		{
-			var tags = $("#tagsHolder").html().replace(/(<([^>]+)>)/ig,"%");
+			var tags = $("#tagsHolder div").text().replace(/x/ig,"%");
 				tags = tags.split('%');
-				tags = tags.filter(function(e){return e}); 
+				tags = tags.filter(function(e){return e}); 	
 			
 			var title = $("#title").val();
 			//so now some ajax stuff...
 			var url = "../scripts/ajax/submitContent.php";
 			texteditorHTML = encodeURIComponent(texteditorHTML);
 			var data = "message=" + texteditorHTML + '&tags=' + tags + '&title=' + title; 
-			console.log(texteditorHTML);
-			console.log('submit');
+			
 			$.ajax({
 				type: "POST",
 				data: data,
@@ -164,11 +197,20 @@ $(document).ready(function()
 			tag = tag.substr(0, (tag.length - 1));
 			$("#TagInput").val('');
 			var oldtags = $("#tagsHolder").html();
-			$("#tagsHolder").html(oldtags + '<span>' + tag + '</span>');
+			$("#tagsHolder").html(oldtags + '<div>' + tag + '<span class="TagClose">x</span></div>');
+			$(".TagClose").click(function()
+			{
+				$(this).parent().remove();
+			});
 		}
-	});
+	});	
 	
-	setInterval(getNotifications, 10000);
+	$(".TagClose").click(function()
+	{
+		$(this).parent().remove();
+	});
+			
+	setInterval(getNotifications, 10000); //gets notification
 	getNotifications(); //starts it off...
 });
 

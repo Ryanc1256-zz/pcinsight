@@ -19,10 +19,9 @@
 <html lang="en">
 	<head>
 		<title> PC insight </title>
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-		<script src="https://apis.google.com/js/plusone.js" type="text/javascript"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>	
 		<script type="text/javascript" src="js/base.js"></script>		
-		<link rel="stylesheet" type="text/css" href="css/base.css" />			 
+		<link rel="stylesheet" type="text/css" href="css/login.css" />			 
 	</head>
 	<body>
 		<ul id="navigation">
@@ -39,19 +38,7 @@
 				<span id="errorMessage"></span>
 				<input type="submit" value="Register" />
 				<span id="loader"></span>
-			</form>	
-			
-			<span id="signinButton">
-				  <span
-					class="g-signin"
-					data-callback="loginFinishedCallback"
-					data-approvalprompt="force"
-					data-clientid="498017223743.apps.googleusercontent.com"
-					data-cookiepolicy="single_host_origin"
-					data-requestvisibleactions="http://schemas.google.com/AddActivity"
-					data-scope="https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email">
-				  </span>
-			</span>
+			</form>				
 		</div>	
 		<div id="footer">
 			<ul>
