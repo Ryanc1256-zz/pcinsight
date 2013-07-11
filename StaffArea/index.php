@@ -38,6 +38,15 @@
 				</ul>
 			</div>
 			<div id="TopLeft">
+				<?php
+					require_once('../scripts/required/login.php');						
+					$db = @new mysqli($dbhost,$dbuser,$dbpass,$dbname);
+					if (mysqli_connect_errno($con))
+					{
+						echo "<div id='NoArticles'>Database connection error...<span id='sadFace'>:(</span></div>";	
+						exit;
+					}
+				?>
 				<ul>
 					<li><a href="../index.php"> To website </a></li>
 					<li><a href="index.php"> Home </a></li>
@@ -47,16 +56,10 @@
 							<li><a href="review.php"> Review Article </a></li>
 						</ul>						
 					</li>
-					<?php
-						require_once('../scripts/required/login.php');
-						$db = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
-						if (mysqli_connect_errno($con))
-						{
-							echo "Failed to connect to MySQL: " . mysqli_connect_error();
-						}
+					<?php						
 						$id = $_SESSION['UserID'];
-						$query = mysqli_query($db, "SELECT admin FROM users WHERE UserID=$id");	
-						$query = mysqli_fetch_array($query);
+						$query = $db->query("SELECT admin FROM users WHERE UserID=$id");	
+						$query = $query->fetch_array();
 						mysqli_close($db);
 						if ($query['admin'] == '1'){
 						echo '<li><a href="#"> Moderators <span class="caret"></span></a>
@@ -77,6 +80,17 @@
 			</div>
 			<div id="articles">
 			
+			</div>
+			<div id="server">
+				<p> Server Load </p>
+				<div class="progressBar">
+					<?php
+						//just the progess bar
+						$load = sys_getloadavg();	
+						$load = (round($load[0]))."%";
+						echo '<div class="progressInner" style="width:'.$load.'"><span>'.$load.'</span></div>';					
+					?>
+				</div>
 			</div>
 		</div>
 		<div id="Notifications">

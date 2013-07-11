@@ -76,7 +76,7 @@
 			<span id="error"></span>
 			<?php
 				require_once('../scripts/required/login.php');
-				$db = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
+				$db = @mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
 				if (mysqli_connect_errno($con))
 				{
 					echo "Failed to connect to MySQL: " . mysqli_connect_error();
@@ -121,7 +121,7 @@
 							{					
 								foreach ($exp as $index)
 								{
-									$click .="<span>$index</span>";
+									$click .="<div>$index<span class='TagClose'>x</span></div>";
 								}
 							}
 						}

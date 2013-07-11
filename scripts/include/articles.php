@@ -1,28 +1,21 @@
 <?php
 	
-	if ($_SERVER['SCRIPT_NAME'] == '/pcinsight/index.php')
+	if (!($_SERVER['SCRIPT_NAME'] == '/pcinsight/index.php'))
 	{
-		require_once('scripts/required/login.php');	
+		exit;
+		//hmmm somethings going on... 
 	}
-	else
-	{
-		require_once('../required/login.php');	
-		header("Access-Control-Allow-Origin: *");
-	}
-	$db = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
-	if (mysqli_connect_errno($con))
-	{
-		echo "Failed to connect to MySQL: " . mysqli_connect_error();
-	}		
-	$id = $_GET['reviewid'];
-	$query = mysqli_query($db, "SELECT * FROM Articles WHERE editorsTick=1 ORDER BY id DESC");
+	
+	
+	$id = isset($_GET['reviewid']);
+	$query = $db->query("SELECT * FROM Articles WHERE editorsTick=1 ORDER BY id DESC");
 	
 	echo '<div id="articleHolder">';	
 	while ($row = mysqli_fetch_array($query))
 	{	
 		$writersEmail = $row['writer'];			
-		$staffEmailQuery = mysqli_query($db, "SELECT * FROM users WHERE staff = 1");	
-		while ($staffrows = mysqli_fetch_array($staffEmailQuery))
+		$staffEmailQuery = $db->query("SELECT * FROM users WHERE staff = 1") or die('error');	
+		while ($staffrows = $staffEmailQuery->fetch_array())
 		{
 			if ($staffrows['email'] == $writersEmail)
 			{

@@ -48,21 +48,25 @@
 			echo 'FailedToHashPassword';
 		unset($hasher);
 		
-
-		($stmt = $db->prepare('INSERT INTO users (username, password, email, staff, socialnetwork) values (?, ?, ?, false, false)'))|| fail('MySQL prepare', $db->error);
-		$stmt->bind_param('sss', $_POST['username'], $hash, $_POST['email'])|| fail('MySQL bind_param', $db->error);
+		$id = generateRandomString(); //generate a random key
+		
+		($stmt = $db->prepare('INSERT INTO users (username, password, email, staff, socialnetwork, idGen) values (?, ?, ?, false, false, ?)'))|| fail('MySQL prepare', $db->error);
+		$stmt->bind_param('ssss', $_POST['username'], $hash, $_POST['email'], $id)|| fail('MySQL bind_param', $db->error);
 		$stmt->execute()|| fail('MySQL execute', $db->error);
 		
-		/*
+		
 		$to = $_POST['email'];
 		$subject = 'Pcinsight register';
-		$headers = "From: Admin@pcinsight.co.nz \r\n";		
+		$headers = "From: admin@pcinsight.co.nz \r\n";		
 		$headers .= "MIME-Version: 1.0\r\n";
 		$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
-		$message = '<html><body>';
-		$message .= "<div><p> Please click here </p></div>";
+		$message = '<html><body style="background: #eee;border: 1px solid #f1f1f1">';
+		$message .= '<div style="background: #000; height: 60px;padding: 6px;"><img style="float:left;" src="http://linuxuser.heliohost.org/pcinsight/images/logo.png" height="60" /><h2 style="color:#fff; float:left; margin-left: 30px;"> PCinsight </h2></div>';
+		$message .= '<div style="height: 100px; text-align: center;"><p> Please click <a href="http://linuxuser.heliohost.org/pcinsight/?activate='.$id.'">Here</a> to finish the registration process</p><p style="color: #726F6F;">Copyright PCinsight '.Date(Y).'</p></div>';
 		$message .= "</body></html>";
-		mail($to, $subject, $message, $headers);*/
+		mail($to, $subject, $message, $headers);	
+		echo 'done';
+		
 	}
 	else
 	{
@@ -70,17 +74,25 @@
 		echo 'emailTaken';
 		exit;
 	}
-
 	
-		// Are we debugging this code?  If enabled, OK to leak server setup details.
-		$debug = false;
-
-		function fail($pub, $pvt = '')
-		{
-			global $debug;
-			$msg = $pub;
-			if ($debug && $pvt !== '')
-				$msg .= ": $pvt";
-			exit("An error occurred ($msg).\n");
+	function generateRandomString($length = 20) {
+		$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		$randomString = '';
+		for ($i = 0; $i < $length; $i++) {
+			$randomString .= $characters[rand(0, strlen($characters) - 1)];
 		}
+		return $randomString;
+	}
+	
+	// Are we debugging this code?  If enabled, OK to leak server setup details.
+	$debug = false;
+
+	function fail($pub, $pvt = '')
+	{
+		global $debug;
+		$msg = $pub;
+		if ($debug && $pvt !== '')
+			$msg .= ": $pvt";
+		exit("An error occurred ($msg).\n");
+	}
 ?>
