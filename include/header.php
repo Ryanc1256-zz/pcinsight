@@ -1,6 +1,10 @@
 <?php
+function str_endsWith($lookIn, $find) {
+  return substr($lookIn, -strlen($find)) === $find;
+}
+
 	session_start();
-    if ($_SERVER['PHP_SELF'] == 'index.php') {
+    if (str_endsWith($_SERVER['SCRIPT_NAME'], 'index.php')) {
 	require_once('scripts/required/login.php');
 	$db = new mysqli($dbhost,$dbuser,$dbpass,$dbname);
 	if ($db->connect_error)
@@ -29,7 +33,7 @@
 	</head>
 	<body>
 		<?php
-		    if ($_SERVER['PHP_SELF'] == 'index.php') {
+		    if (str_endsWith($_SERVER['SCRIPT_NAME'], 'index.php')) {
 			unset($userquery);
 			if (isset($_SESSION['UserID'])){
 				$userid = $_SESSION['UserID'];	

@@ -13,7 +13,8 @@
 	{
 			header('location: ../index.php');
 	}
-	
+	$emailIsWrong = false;
+	$dbError = false;
 	if (isset($_POST['username']))
 	{
 		if (isset($_POST['email']) && isset($_POST['staff']) && isset($_POST['emailcheck']))
@@ -34,7 +35,7 @@
 	
 	require_once('../scripts/required/login.php');
 	$db = @mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
-	if (mysqli_connect_errno($con))
+	if (mysqli_connect_errno($db))
 	{
 		$dbError = true;		
 	}

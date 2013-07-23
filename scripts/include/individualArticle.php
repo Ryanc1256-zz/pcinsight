@@ -1,7 +1,7 @@
 <?php
 	require_once('scripts/required/login.php');
 	$db = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
-	if (mysqli_connect_errno($con))
+	if (mysqli_connect_errno($db))
 	{
 		echo "Failed to connect to MySQL: " . mysqli_connect_error();
 	}		
@@ -12,15 +12,13 @@
 	echo '<div id="articleHolder">';		
 		while ($row = mysqli_fetch_array($query))
 		{	
-			$writersEmail = $row['writer'];			
-			$staffEmailQuery = mysqli_query($db, "SELECT * FROM users WHERE staff = 1");	
-			while ($staffrows = mysqli_fetch_array($staffEmailQuery))
+			$writersEmail = $row['writer'];
+			$email = mysqli_real_escape_string($db, $writersEmail);
+			$staffEmailQuery = $db->query("SELECT username FROM users WHERE email='$email'") or die('error');	
+			while ($staffrows = $staffEmailQuery->fetch_array())
 			{
-				if ($staffrows['email'] == $writersEmail)
-				{
-					$writer = $staffrows['username'];
-				}
-			}	
+				$writer = $staffrows['username'];
+			}
 			$message = $row['articletext'];	
 			$article = "<div class='article'>";
 				$article .= "<div class='innerArticle sponsor'>";
@@ -28,7 +26,7 @@
 					$article .= "<span class='writer'>By <a href='mailto:".$writersEmail."' target='_blank'>".$writer."</a></span>";					
 					$article .= $message;	
 					$article .= "</div>";			
-					$article .= "<div id='tagsHolder'>";
+					$article .= "<div id='tagsHolder' class='tagsHolder'>";
 					$exp = explode(',', $row['tags']);	
 					if (strlen($row['tags']) > 1)
 					{

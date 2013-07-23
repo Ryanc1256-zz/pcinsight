@@ -6,4 +6,4 @@
 			</div>
 			
 		</div>
-<?php require_once('include/bottom.php'); ?>
+<?php require_once('include/footer.php'); ?>
