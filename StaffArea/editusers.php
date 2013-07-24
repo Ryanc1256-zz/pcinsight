@@ -13,7 +13,8 @@
 	{
 			header('location: ../index.php');
 	}
-	
+	$emailIsWrong = false;
+	$dbError = false;
 	if (isset($_POST['username']))
 	{
 		if (isset($_POST['email']) && isset($_POST['staff']) && isset($_POST['emailcheck']))
@@ -34,7 +35,7 @@
 	
 	require_once('../scripts/required/login.php');
 	$db = @mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
-	if (mysqli_connect_errno($con))
+	if (mysqli_connect_errno($db))
 	{
 		$dbError = true;		
 	}
@@ -120,6 +121,10 @@
 								$data .= "<input type='text' id='username' name='username' value='".$username."' /><br />";
 								$data .= "<label for='email'>Email</label>";
 								$data .= "<input type='text' id='email' name='email' value='".$email."' /><br />";
+								$data .= "<label for='password'>Change password</label>";
+								$data .= "<input type='password' id='password' name='password' /><br />";
+								$data .= "<label for='password2'>Confirm password</label>";
+								$data .= "<input type='password' id='password2' name='password2' /><br />";
 								$data .= "<label for='emailCheck'>Email verified</label>";
 								$data .= "<input type='checkbox' id='emailCheck' name='emailcheck' value='t' checked='".$emailCheck."' /><br />";
 								$data .= "<label for='staffCheck'>Staff</label>";

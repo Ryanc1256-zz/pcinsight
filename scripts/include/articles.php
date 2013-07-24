@@ -1,6 +1,6 @@
 <?php
 	
-	if (!($_SERVER['SCRIPT_NAME'] == '/pcinsight/index.php'))
+	if (!str_endsWith($_SERVER['SCRIPT_NAME'], '/index.php'))
 	{
 		exit;
 		//hmmm somethings going on... 
@@ -10,18 +10,16 @@
 	$id = isset($_GET['reviewid']);
 	$query = $db->query("SELECT * FROM Articles WHERE editorsTick=1 ORDER BY id DESC");
 	
-	echo '<div id="articleHolder">';	
-	while ($row = mysqli_fetch_array($query))
+	echo '<div id="articleHolder">';
+	while ($row = $query->fetch_array())
 	{	
-		$writersEmail = $row['writer'];			
-		$staffEmailQuery = $db->query("SELECT * FROM users WHERE staff = 1") or die('error');	
+		$writersEmail = $row['writer'];
+		$email = mysqli_real_escape_string($db, $writersEmail);
+		$staffEmailQuery = $db->query("SELECT username FROM users WHERE email='$email'") or die('error');	
 		while ($staffrows = $staffEmailQuery->fetch_array())
 		{
-			if ($staffrows['email'] == $writersEmail)
-			{
-				$writer = $staffrows['username'];
-			}
-		}			
+			$writer = $staffrows['username'];
+		}
 		$articletext = "<p>".strip_tags(MaxWordCount($row['articletext'], 200))."</p>";
 		$article = "<div class='article'>";
 			$article .= "<div class='innerArticle sponsor'>";

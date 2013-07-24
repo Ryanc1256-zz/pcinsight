@@ -1,7 +1,7 @@
 <?php
 	require_once('required/login.php');
 		$db = new mysqli($dbhost,$dbuser,$dbpass,$dbname);
-		if (mysqli_connect_errno($con))
+		if (mysqli_connect_errno($db))
 	   {
 			echo "Failed to connect to MySQL: " . mysqli_connect_error();
 	   }
@@ -24,9 +24,14 @@
 		//so now we have the password and username working fine...
 		
 		require_once('required/PasswordHash.php');
+		$hash_cost_log2 = 8;
+		// Do we require the hashes to be portable to older systems (less secure)?
+		$hash_portable = FALSE;
+
+
 		$staff = '0';
 		$hash = '*';
-		($stmt = $db->prepare('Select password, staff, UserID FROM users WHERE email = ?'))|| fail('MySQL prepare', $db->error);
+		($stmt = $db->prepare('Select password, editor, UserID FROM users WHERE email = ?'))|| fail('MySQL prepare', $db->error);
 		$stmt->bind_param('s', $_POST['email'])|| fail('MySQL bind_param', $db->error);
 		$stmt->execute()|| fail('MySQL execute', $db->error);	
 		$stmt->bind_result($hash, $staff, $id)|| fail('MySQL bind_result', $db->error);
