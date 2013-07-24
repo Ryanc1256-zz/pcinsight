@@ -1,16 +1,30 @@
-<?php
+<?php	
 	require_once('scripts/required/login.php');
-	$db = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
-	if (mysqli_connect_errno($db))
+	$db = new mysqli($dbhost,$dbuser,$dbpass,$dbname);
+	if (mysqli_connect_errno($con))
 	{
 		echo "Failed to connect to MySQL: " . mysqli_connect_error();
-	}		
-	$id = $_GET['articleid'];
-	if (count($id) > 0){
-	$query = mysqli_query($db, "SELECT * FROM Articles WHERE id=$id");
+	}	
+
 	
+	$id = $_GET['articleid'];
+	if (isset($_POST['commentSubmit']))
+	{
+		//add comment to db...
+		if ($_POST['comment'])
+		{
+			$comment = $_POST['comment'];
+			$userID = $_SESSION['UserID'];	
+			$qry = "INSERT INTO comments (articleID, message, userID) VALUES ('$id', '$comment', '$userID')";
+			$db->query($qry) or die($db->error);
+		}	
+	}
+	
+
+	if (count($id) > 0){
+	$query = $db->query("SELECT * FROM Articles WHERE id=$id");	
 	echo '<div id="articleHolder">';		
-		while ($row = mysqli_fetch_array($query))
+		while ($row = $query->fetch_array())
 		{	
 			$writersEmail = $row['writer'];
 			$email = mysqli_real_escape_string($db, $writersEmail);
@@ -46,6 +60,31 @@
 			$article .= "</div>";
 			echo $article;
 		}
-		echo "</div>";
+		//comment section...
+		if (isset($_SESSION['email']))
+		{
+			//well hes logged in and add a comment	
+			$html = "<script type='text/javascript' src='ckeditor/ckeditor.js'></script>";
+			$html .= '<form action="'.$_SERVER['REQUEST_URI'].'" method="POST">';
+				$html .= '<textarea name="comment" class="ckeditor"></textarea>';
+				$html .= '<input type="submit" name="commentSubmit"/>';
+			$html .= '</form>';
+			echo $html;
+		}
+		//display comments
+		$commentHTML = '<div id="comments">';
+			$CommentQuery = $db->query("SELECT * FROM comments WHERE articleID = $id ORDER BY commentID DESC");
+			while ($row = $CommentQuery->fetch_array())
+			{
+				$username = $db->query('SELECT username FROM users WHERE UserID='.$row['userID']);
+				$username = $username->fetch_array()[0]; //gets the username So for example 'Ryan Clough'
+				$commentHTML .= '<div class="comment">';
+					$commentHTML .= '<p>'.$username.'</p>';
+					$commentHTML .= $row['message'];	
+				$commentHTML .= '<div class="comment">';
+			}		
+		$commentHTML .= '</div';
+		echo $commentHTML."</div>";
+		
 	}
 ?>				
