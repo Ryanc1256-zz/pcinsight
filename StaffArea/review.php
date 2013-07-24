@@ -77,7 +77,7 @@
 			<?php
 				require_once('../scripts/required/login.php');
 				$db = @mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
-				if (mysqli_connect_errno($con))
+				if (mysqli_connect_errno($db))
 				{
 					echo "Failed to connect to MySQL: " . mysqli_connect_error();
 				}

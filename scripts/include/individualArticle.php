@@ -26,15 +26,13 @@
 	echo '<div id="articleHolder">';		
 		while ($row = $query->fetch_array())
 		{	
-			$writersEmail = $row['writer'];			
-			$staffEmailQuery = $db->query("SELECT * FROM users WHERE staff = 1");	
+			$writersEmail = $row['writer'];
+			$email = mysqli_real_escape_string($db, $writersEmail);
+			$staffEmailQuery = $db->query("SELECT username FROM users WHERE email='$email'") or die('error');	
 			while ($staffrows = $staffEmailQuery->fetch_array())
 			{
-				if ($staffrows['email'] == $writersEmail)
-				{
-					$writer = $staffrows['username'];
-				}
-			}	
+				$writer = $staffrows['username'];
+			}
 			$message = $row['articletext'];	
 			$article = "<div class='article'>";
 				$article .= "<div class='innerArticle sponsor'>";
@@ -42,7 +40,7 @@
 					$article .= "<span class='writer'>By <a href='mailto:".$writersEmail."' target='_blank'>".$writer."</a></span>";					
 					$article .= $message;	
 					$article .= "</div>";			
-					$article .= "<div id='tagsHolder'>";
+					$article .= "<div id='tagsHolder' class='tagsHolder'>";
 					$exp = explode(',', $row['tags']);	
 					if (strlen($row['tags']) > 1)
 					{

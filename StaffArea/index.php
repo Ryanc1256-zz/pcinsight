@@ -41,7 +41,7 @@
 				<?php
 					require_once('../scripts/required/login.php');						
 					$db = @new mysqli($dbhost,$dbuser,$dbpass,$dbname);
-					if (mysqli_connect_errno($con))
+					if (mysqli_connect_errno($db))
 					{
 						echo "<div id='NoArticles'>Database connection error...<span id='sadFace'>:(</span></div>";	
 						exit;
