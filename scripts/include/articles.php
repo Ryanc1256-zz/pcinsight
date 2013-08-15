@@ -8,7 +8,7 @@
 	
 	
 	$id = isset($_GET['reviewid']);
-	$query = $db->query("SELECT * FROM Articles WHERE editorsTick=1 ORDER BY id DESC");
+	$query = $db->query("SELECT * FROM Articles WHERE editorsTick=1 ORDER BY id DESC") or die($db->error);
 	
 	echo '<div id="articleHolder">';
 	while ($row = $query->fetch_array())

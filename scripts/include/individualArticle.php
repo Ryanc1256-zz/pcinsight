@@ -1,28 +1,29 @@
 <?php	
 	require_once('scripts/required/login.php');
 	$db = new mysqli($dbhost,$dbuser,$dbpass,$dbname);
-	if (mysqli_connect_errno($con))
+	if (mysqli_connect_errno($db))
 	{
 		echo "Failed to connect to MySQL: " . mysqli_connect_error();
 	}	
 
 	
-	$id = $_GET['articleid'];
+	$id = (string) (int) $_GET['articleid']; //just a silly way to ensure $id is a number...
 	if (isset($_POST['commentSubmit']))
 	{
 		//add comment to db...
 		if ($_POST['comment'])
 		{
 			$comment = $_POST['comment'];
-			$userID = $_SESSION['UserID'];	
-			$qry = "INSERT INTO comments (articleID, message, userID) VALUES ('$id', '$comment', '$userID')";
-			$db->query($qry) or die($db->error);
-		}	
+			$userID = $_SESSION['UserID'];
+			($stmt = $db->prepare('INSERT INTO comments (articleID, message, userID) VALUES (?, ?, ?)'))|| fail('MySQL prepare', $db->error);
+			$stmt->bind_param('isi', $id, $comment, $userID)|| fail('MySQL bind_param', $db->error);
+			$stmt->execute()|| fail('MySQL execute', $db->error);
+		}
 	}
 	
 
 	if (count($id) > 0){
-	$query = $db->query("SELECT * FROM Articles WHERE id=$id");	
+	$query = $db->query("SELECT * FROM Articles WHERE id=$id;");
 	echo '<div id="articleHolder">';		
 		while ($row = $query->fetch_array())
 		{	
@@ -77,14 +78,25 @@
 			while ($row = $CommentQuery->fetch_array())
 			{
 				$username = $db->query('SELECT username FROM users WHERE UserID='.$row['userID']);
-				$username = $username->fetch_array()[0]; //gets the username So for example 'Ryan Clough'
+				$username = $username->fetch_array();
+				$username = $username[0]; //gets the username So for example 'Ryan Clough'
 				$commentHTML .= '<div class="comment">';
-					$commentHTML .= '<p>'.$username.'</p>';
-					$commentHTML .= $row['message'];	
+				$commentHTML .= '<p>'.$username.'</p>';
+				$commentHTML .= $row['message'];
 				$commentHTML .= '<div class="comment">';
-			}		
-		$commentHTML .= '</div';
+			}
+		$commentHTML .= '</div>';
 		echo $commentHTML."</div>";
 		
+	}
+
+	$debug = false;
+	function fail($pub, $pvt = '')
+	{
+		global $debug;
+		$msg = $pub;
+		if ($debug && $pvt !== '')
+			$msg .= ": $pvt";
+		exit("An error occurred ($msg).\n");
 	}
 ?>				
