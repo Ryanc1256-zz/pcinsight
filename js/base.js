@@ -19,9 +19,10 @@ $(document).ready(function(){
 					if ($("#login form input:nth-child(3)").val() === $("#login form input:nth-child(4)").val())
 					{
 						var email = $("#login form input:nth-child(2)").val();
-						if (emailCheck.test(email)){						
-							var password = $("#login form input:nth-child(3)").val()
-							var data = 'username=' + username + '&email='+email + '&password=' + password;
+						if (emailCheck.test(email)){
+							var password = $("#login form input:nth-child(3)").val();
+							var repassword = $("#login form input:nth-child(4)").val();
+							var data = 'username=' + username + '&email='+email + '&password=' + password + '&repassword=' + repassword + '&ajax=true';
 							$.ajax({
 								type: 'POST',
 								data: data,
@@ -36,7 +37,7 @@ $(document).ready(function(){
 										$("#errorMessage").text("Email Address has been taken");
 										$("#errorMessage").css('display', 'block');
 									}
-								}				
+								}
 							});
 						}
 						else
@@ -73,11 +74,11 @@ $(document).ready(function(){
 					var emailCheck = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 					if (emailCheck.test(email)){
 						var password = $("#login form input:nth-child(2)").val();
-						var data = 'email=' + email + '&password=' + password;
+						var data = 'email=' + email + '&password=' + password + '&ajax=true';
 						$.ajax({
 							type: 'POST',
 							data: data,
-							url: 'scripts/ajaxlogin.php',
+							url: 'scripts/login.php',
 							success: function(data)
 							{
 								$("#loader").hide();								

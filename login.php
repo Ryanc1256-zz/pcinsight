@@ -10,8 +10,15 @@
 		<a href="index.php" id="nav"> Home </a>
 		<div id="login">
 			<h3> Login </h3>
-			<form action="login.php" method="POST">
-				<input type="text" name="email" placeholder="Email"/>
+			<?php
+			if (isset($_GET['error'])) {
+			  echo '<div id="error">';
+			  echo $_GET['error'];
+			  echo '</div>';
+			}
+			?>
+			<form action="scripts/login.php" method="POST">
+				<input type="text" name="email" placeholder="Email" <?php if (isset($_GET['email'])) echo "value=\"{$_GET['email']}\"" ?>/>
 				<input type="password" name="password" placeholder="Password"/>
 				<input type="submit" value="Login" />
 				<a href="register.php" id="register"> Register </a>
