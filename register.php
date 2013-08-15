@@ -30,9 +30,16 @@
 		</ul>
 		<div id="login">
 			<h3> Register </h3>
-			<form action="#" method="POST">
-				<input type="text" name="username" placeholder="Username"/>
-				<input type="text" name="email" placeholder="Email"/>
+			<?php 
+			if (isset($_GET['error'])) {
+			  echo '<div id="error">';
+			  echo $_GET['error'];
+			  echo '</div>';
+			}
+			?>
+			<form action="scripts/RegisterBackend.php" method="POST">
+				<input type="text" name="username" placeholder="Username" <?php if (isset($_GET['username'])) echo "value=\"{$_GET['username']}\"" ?> />
+				<input type="text" name="email" placeholder="Email" <?php if (isset($_GET['email'])) echo "value=\"{$_GET['email']}\"" ?>/>
 				<input type="password" name="password" placeholder="Password"/>
 				<input type="password" name="repassword" placeholder="Redo Password"/>
 				<span id="errorMessage"></span>
