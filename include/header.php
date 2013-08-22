@@ -37,7 +37,7 @@ function str_endsWith($lookIn, $find) {
 			unset($userquery);
 			if (isset($_SESSION['UserID'])){
 				$userid = $_SESSION['UserID'];	
-				$query = "SELECT emailCheck FROM users WHERE UserID=1";	
+				$query = "SELECT emailCheck FROM users WHERE UserID=$userid";	
 				$userquery = $db->query($query) or die($db->error);		
 				$result = $userquery->fetch_array();
 				if ($result['emailCheck'] == '0'){
