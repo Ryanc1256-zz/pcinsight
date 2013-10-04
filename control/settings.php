@@ -1,0 +1,3 @@
+<?php
+	define('THEME', 'pcinsight');
+?>
