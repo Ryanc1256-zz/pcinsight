@@ -14,6 +14,7 @@
 			);
 			
 			$this->pageInfo = $info;
+			return $info;
 		}
 	
 	}

@@ -1,0 +1,304 @@
+<!doctype html>
+<html>
+	<head>
+		<title> Admin </title>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="resources/css/main.css" />
+		<link rel="stylesheet" type="text/css" href="resources/css/font-awesome.css" />
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script src="resources/flot/flot.min.js"></script>
+		<!--[if lt IE 9]>
+			<script src="resources/flot/excanvas.min.js"></script>
+		<![endif]-->
+		<script>
+			var ResizeID;
+			
+			
+			$(document).ready(function(){
+				$("#leftNav").css('height', ($(document).height() - 40));
+				
+				var toggled = false;
+				$(".menu.menu-expand.toggle.btn").click(function(){
+					if (!toggled) {
+						$("#leftNav .submenu.toggled").slideUp().removeClass('toggled');
+						$("#leftNav").animate({
+							width: '40px'
+						}, {queue: false});
+						$("#leftNav span").hide();
+						
+						toggled = true;
+						$("#innerContentWrapper").animate({
+							width: ($(window).width() - 40)
+						}, {queue: false});
+					}
+					else
+					{
+						$("#leftNav").animate({
+							width: '251px'
+						}, {
+							complete: function(){
+								$("#leftNav span").show();
+							}
+						});
+						
+						$("#innerContentWrapper").animate({
+							width: ($(window).width() - 251)
+						}, {queue: false});
+						
+						toggled = false;
+					}
+				});
+				
+				$("body").click(function(e){
+					if (!($(e.target).hasClass('dropdown') || $(e.target).parent().hasClass('dropdown') || $(e.target).parent().parent().parent().hasClass('dropdown') || $(e.target).parent().parent().hasClass('dropdown') || $(e.target).hasClass('profilePic') || $(e.target).parent().hasClass('profilePic'))){
+						$("nav .dropdown").hide();
+					}
+					
+					var check = $(e.target).hasClass('notificationbar') || $(e.target).parent().parent().hasClass('notificationbar') || $(e.target).attr('id') == 'notifications' || $(e.target).parent().attr('id') == 'notifications';				
+					if (!check){
+						$(".notificationbar").hide();
+					}				
+				});
+				
+				$("#leftNav li").click(function(e){
+					e.preventDefault();
+					if ($(this).children('ul').hasClass('submenu'))
+					{
+						if (!$(this).children('ul').hasClass('toggled')){
+							$("#leftNav ul.toggled").slideToggle().removeClass('toggled');
+						}
+						var submenu = $(this).children('ul');
+						submenu.slideToggle({
+							complete: function()
+							{								
+								if (submenu.css('display') != 'none')
+								{									
+									submenu.addClass("toggled");
+								}	
+								else
+								{
+									submenu.removeClass('toggled')
+								}
+							}
+						});
+						
+					}
+				});
+				
+				$(window).resize(function(){
+					clearTimeout(ResizeID);
+					ResizeID = setTimeout(doneResizing, 500);							
+				});
+				
+				
+				$("#innerContentWrapper").css({
+					width: ($(window).width() - 256)
+				});
+				
+				$("a[data-dismiss]").click(function(e){
+					e.preventDefault();
+					$(this).parent().remove();
+				});
+				
+				$(".submenu li").click(function(e){
+					e.preventDefault();
+					e.stopPropagation();
+					location.href = $(e.target).children('a').attr('href');
+				});		
+						
+			
+				$(".profilePic").click(function(){
+					$(this).next().toggle();
+				});
+				
+				$("#notifications").click(function(e){
+					if ($(e.target).hasClass('notificationbar')){
+						e.preventDefault();
+					}
+					else
+					{
+						$(this).children(".notificationbar").toggle();
+					}
+				});			
+				
+			});
+			
+			function doneResizing()
+			{				
+				$("#leftNav").css('height', ($(document).height() - 40));
+					
+				$("#innerContentWrapper").css({
+					width: ($(window).width() - 256)
+				});			
+			}
+		
+		</script>	
+	</head>
+	<body>
+		<nav id="top">
+			<div id="rightcontrols">
+				<div id="search">
+					<form class="navbar-form">
+						<div class="form-group">
+							<input type="text" placeholder="Search..." />
+						</div>
+					</form>
+				</div>
+				<div id="notifications">
+					<span class="icon notifications"></span>
+					<span class="badge">5</span>
+					<div class="notificationbar">
+						
+					
+					</div>
+				</div>
+				<div id="person">
+					<div class="profilePic dark">
+						<img src="userfiles/rsz_chrysanthemum-32.jpg" />
+						<span> username </span>
+						<span class="caret"></span>						
+					</div>
+					<ul class="dropdown"> 
+						<li>
+							<a href="#" class="noUnderLine">
+								<img src="userfiles/rsz_chrysanthemum.jpg" />
+								<span> Username </span>
+							</a>
+						</li>
+						<li>
+							<a href="#"> Edit My Profile </a>						
+						</li> 
+						<li>
+							<a href="#"> Log Out </a>						
+						<li> 
+					</ul>
+				</div>				
+			</div>
+			<div class="menu menu-expand toggle btn">
+				<i class="icon-reorder"></i> 
+			</div>
+		</nav>
+		<div id="mainContent">
+			<div id="leftNav">
+				<ul>
+					<li>
+						<i class="icon-dashboard"></i>
+						<span> Dashboard </span>
+					</li>
+					<li>
+						<i class="icon-pushpin"></i>
+						<span> 
+							Post's 
+							<i class="icon-angle-down angle-down icon-right"></i>
+						</span>
+						<ul class="submenu">
+							<li>
+								<a href="#"> All posts </a>
+							</li>							
+							<li>
+								<a href="#"> Add New </a>
+							</li>							
+							<li>
+								<a href="#"> Categories </a>
+							</li>
+							<li>
+								<a href="#"> Tags </a>
+							</li>
+							
+							
+						</ul>
+					</li>
+					<li class="selected dark">
+						<i class="icon-group"></i>
+						<span> 
+							Users 
+							<i class="icon-angle-down angle-down icon-right"></i>
+						</span>
+						
+						<ul class="submenu">
+							<li>
+								<a href="users.html"> All users </a>
+							</li>							
+							<li>
+								<a href="#"> Edit New </a>
+							</li>								
+						</ul>
+					</li>
+			
+			</div>
+		
+		
+		</div>	
+			<div id="mainHeader">
+				<div class="header">
+					<i class="icon-group  red"></i>
+					<h2> Users </h2>
+				</div>
+			</div>
+			<section id="innerContentWrapper" class="float left">
+				<div id="innerContent" class="users page content">
+					<p> list of users </p>
+					<table class="box">
+						<tr>
+							<td>
+								Username 
+							</td>
+							<td> 
+								Email 
+							</td>
+							<td>
+								Join date 
+							</td>
+							<td>
+								Account Status
+							</td>
+							<td> 
+								Warn status
+							</td>
+							<td>
+								User Type 
+							</td>
+							<td>
+								Edit
+							</td>
+							<td>
+								Delete
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Ryanc1256 
+							</td>
+							<td> 
+								ryanc1256@gmail.com 
+							</td>
+							<td>
+								1/10/2013
+							</td>
+							<td>
+								Full User
+							</td>
+							<td> 
+								0
+							</td>
+							<td>
+								Admin
+							</td>
+							<td>
+								<a class="btn" href="editUser.html"> Edit </a>
+							</td>
+							<td>
+								<a class="btn red" href="#"> Delete </a>
+							</td>
+						</tr>
+					</table>	
+				</div>	
+				<span class="line break block clearfix"></span>
+			</section>			
+			<footer>
+				<span class="thanks">
+					<p> Thanks For building :) </p>
+				</span>
+			</footer>		
+	</body>
+</html>

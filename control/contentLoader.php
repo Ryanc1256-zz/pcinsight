@@ -18,11 +18,6 @@
 			}	
 		}
 		
-		private function pageInfo()
-		{
-			define('get_pageInfo', false);
-		}
-		
 		public function setTheme()
 		{
 			$this->theme = $this->loc.THEME;
@@ -30,20 +25,24 @@
 		}
 		
 		public function loadContent()
-		{
-			$this->pageInfo();
-			
-			$this->loadHead();		
-			$this->loadHome();		
-			$this->loadFooter();			
+		{	
+			if (allowedToMove){ //this is probably the admin area
+				$this->loadHead();		
+				$this->loadHome();		
+				$this->loadFooter();
+			}			
 		}
 		
 		
 		private function loadHead()
 		{		
+			$config = new config();
+			$info = new info();			
+			$themePath = $this->themeCSS();
 			include($this->theme.'\header.php');				
 		}	
 		
+				
 		private function loadFooter()
 		{
 			include($this->theme.'\footer.php');		
@@ -51,12 +50,12 @@
 		
 		private function loadHome()
 		{
-			include($this->theme.'\footer.php');					
+			include($this->theme.'\home.php');					
 		}
 		
 		private function themeCSS()
 		{
-			return $this->theme.'\style.css';
+			return '../content/theme/' . THEME .'/' .'style.css';
 		}
 		
 		

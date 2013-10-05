@@ -1,0 +1,301 @@
+<!doctype html>
+<html>
+	<head>
+		<title> Admin </title>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="resources/css/main.css" />
+		<link rel="stylesheet" type="text/css" href="resources/css/font-awesome.css" />
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script src="resources/flot/flot.min.js"></script>
+		<!--[if lt IE 9]>
+			<script src="resources/flot/excanvas.min.js"></script>
+		<![endif]-->
+		<script>
+			var ResizeID;
+			
+			
+			$(document).ready(function(){
+				$("#leftNav").css('height', ($(document).height() - 40));
+				
+				var toggled = false;
+				$(".menu.menu-expand.toggle.btn").click(function(){
+					if (!toggled) {
+						$("#leftNav .submenu.toggled").slideUp().removeClass('toggled');
+						$("#leftNav").animate({
+							width: '40px'
+						}, {queue: false});
+						$("#leftNav span").hide();
+						
+						toggled = true;
+						$("#innerContentWrapper").animate({
+							width: ($(window).width() - 40)
+						}, {queue: false});
+					}
+					else
+					{
+						$("#leftNav").animate({
+							width: '251px'
+						}, {
+							complete: function(){
+								$("#leftNav span").show();
+							}
+						});
+						
+						$("#innerContentWrapper").animate({
+							width: ($(window).width() - 251)
+						}, {queue: false});
+						
+						toggled = false;
+					}
+				});
+				
+				$("body").click(function(e){
+					if (!($(e.target).hasClass('dropdown') || $(e.target).parent().hasClass('dropdown') || $(e.target).parent().parent().parent().hasClass('dropdown') || $(e.target).parent().parent().hasClass('dropdown') || $(e.target).hasClass('profilePic') || $(e.target).parent().hasClass('profilePic'))){
+						$("nav .dropdown").hide();
+					}
+					
+					var check = $(e.target).hasClass('notificationbar') || $(e.target).parent().parent().hasClass('notificationbar') || $(e.target).attr('id') == 'notifications' || $(e.target).parent().attr('id') == 'notifications';				
+					if (!check){
+						$(".notificationbar").hide();
+					}				
+				});
+				
+				$("#leftNav li").click(function(e){					
+					if ($(this).children('ul').hasClass('submenu'))
+					{
+						e.preventDefault();
+						if (!$(this).children('ul').hasClass('toggled')){
+							$("#leftNav ul.toggled").slideToggle().removeClass('toggled');
+						}
+						var submenu = $(this).children('ul');
+						submenu.slideToggle({
+							complete: function()
+							{								
+								if (submenu.css('display') != 'none')
+								{									
+									submenu.addClass("toggled");
+								}	
+								else
+								{
+									submenu.removeClass('toggled')
+								}
+							}
+						});
+						
+					}
+				});
+				
+				$(window).resize(function(){
+					clearTimeout(ResizeID);
+					ResizeID = setTimeout(doneResizing, 500);							
+				});
+				
+				
+				$("#innerContentWrapper").css({
+					width: ($(window).width() - 256)
+				});
+				
+				$("a[data-dismiss]").click(function(e){
+					e.preventDefault();
+					$(this).parent().remove();
+				});
+				
+				$(".submenu li").click(function(e){
+					e.preventDefault();
+					e.stopPropagation();
+					if ($(this).children('a').attr('href') || $(this).children('span').children('a').attr('href')){
+						location.href = $(this).children('a').attr('href');
+					}
+				});		
+						
+			
+				$(".profilePic").click(function(){
+					$(this).next().toggle();
+				});
+				
+				$("#notifications").click(function(e){
+					if ($(e.target).hasClass('notificationbar')){
+						e.preventDefault();
+					}
+					else
+					{
+						$(this).children(".notificationbar").toggle();
+					}
+				});			
+				
+			});
+			
+			function doneResizing()
+			{				
+				$("#leftNav").css('height', ($(document).height() - 40));
+					
+				$("#innerContentWrapper").css({
+					width: ($(window).width() - 256)
+				});			
+			}
+		
+		</script>	
+	</head>
+	<body>
+		<nav id="top">
+			<div id="rightcontrols">
+				<div id="search">
+					<form class="navbar-form">
+						<div class="form-group">
+							<input type="text" placeholder="Search..." />
+						</div>
+					</form>
+				</div>
+				<div id="notifications">
+					<span class="icon notifications"></span>
+					<span class="badge">5</span>
+					<div class="notificationbar">
+						
+					
+					</div>
+				</div>
+				<div id="person">
+					<div class="profilePic dark">
+						<img src="userfiles/rsz_chrysanthemum-32.jpg" />
+						<span> username </span>
+						<span class="caret"></span>						
+					</div>
+					<ul class="dropdown"> 
+						<li>
+							<a href="#" class="noUnderLine">
+								<img src="userfiles/rsz_chrysanthemum.jpg" />
+								<span> Username </span>
+							</a>
+						</li>
+						<li>
+							<a href="#"> Edit My Profile </a>						
+						</li> 
+						<li>
+							<a href="#"> Log Out </a>						
+						<li> 
+					</ul>
+				</div>				
+			</div>
+			<div class="menu menu-expand toggle btn">
+				<i class="icon-reorder"></i> 
+			</div>
+		</nav>
+		<div id="mainContent">
+			<div id="leftNav">
+				<ul>
+					<li>
+						<i class="icon-dashboard"></i>
+						<span><a href="index.html">Dashboard</a></span>
+					</li>
+					<li>
+						<i class="icon-pushpin"></i>
+						<span> 
+							Post's 
+							<i class="icon-angle-down angle-down icon-right"></i>
+						</span>
+						<ul class="submenu">
+							<li>
+								<a href="#"> All posts </a>
+							</li>							
+							<li>
+								<a href="#"> Add New </a>
+							</li>							
+							<li>
+								<a href="#"> Categories </a>
+							</li>
+							<li>
+								<a href="#"> Tags </a>
+							</li>
+							
+							
+						</ul>
+					</li>
+					<li class="selected dark">
+						<i class="icon-group"></i>
+						<span> 
+							Users 
+							<i class="icon-angle-down angle-down icon-right"></i>
+						</span>
+						
+						<ul class="submenu">
+							<li>
+								<a href="users.html"> All users </a>
+							</li>							
+							<li>
+								<a href="#"> Edit New </a>
+							</li>								
+						</ul>
+					</li>
+			
+			</div>
+		
+		
+		</div>	
+			<div id="mainHeader">
+				<div class="header">
+					<i class="icon-group  red"></i>
+					<h2> Edit Users </h2>
+				</div>
+			</div>
+			<section id="innerContentWrapper" class="float left">
+				<div id="innerContent" class="users page content">
+					<div class="user alert alert-dismissable alert-danger"> 
+						<a class="close" data-dismiss="alert" href="#">x</a>
+						<b>You are about to edit someones account! Be carful!</b> If you shouldn't be doing this then just leave... If you're allowed to do this, but not sure if you should please ask one of the admin's
+					</div>
+					<form action="#" method="post">
+						<label for="username"> Username </label>
+						<input type="text" id="username" value="random name"/>
+						
+						<br />
+						
+						<label for="email"> Email </label>
+						<input type="text" value="email@email.com" id="email"/>
+						
+						<br />
+						
+						<label> Join Date </label>
+						<span> 1/10/2013 </span>
+						
+						<br />
+						
+						<label> Account Status </label>
+						<span>  <small> Verified: </small> </span>
+						<input type="radio" name="account" checked="checked"/>
+						<span> <small>Not-Verified: </small> </span>
+						<input type="radio" name="account"/>
+						
+						<br />
+						
+						<label> Warn Status </label>	
+						<span>  <small> 0: </small> </span>						
+						<input type="radio" name="warn" value="0" checked="checked"/>
+						<span>  <small> 1: </small> </span>		
+						<input type="radio" name="warn" value="1"/>
+						<span>  <small> 2: </small> </span>		
+						<input type="radio" name="warn" value="2"/>
+						<span>  <small> 3: </small> </span>		
+						<input type="radio" name="warn" value="3"/>
+						
+						<br />
+						
+						<label for="userType"> User Type </label>
+						<select name="userType" id="userType">
+							<option> User </option>
+							<option> Writer </option>
+							<option> Admin </option>
+							<option> Developer </option>
+							<option> Admin and Developer </option>						
+						</select>
+						<input type="submit" class="btn" value="submit"/>
+					</form>
+				</div>	
+				<span class="line break block clearfix"></span>
+			</section>			
+			<footer>
+				<span class="thanks">
+					<p> Thanks For building :) </p>
+				</span>
+			</footer>		
+	</body>
+</html>

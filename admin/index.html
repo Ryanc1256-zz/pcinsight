@@ -1,0 +1,364 @@
+<!doctype html>
+<html>
+	<head>
+		<title> Admin </title>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="resources/css/main.css" />
+		<link rel="stylesheet" type="text/css" href="resources/css/font-awesome.css" />
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script src="resources/flot/flot.min.js"></script>
+		<!--[if lt IE 9]>
+			<script src="resources/flot/excanvas.min.js"></script>
+		<![endif]-->
+		<script>
+			var ResizeID;
+			var d1 = [[0, 3], [4, 8], [8, 5], [9, 13]];
+			var d2 = [[0, 0], [2, 8], [8, 10], [9, 13]];
+			
+			$(document).ready(function(){
+				$("#leftNav").css('height', ($(document).height() - 40));
+				
+				var toggled = false;
+				$(".menu.menu-expand.toggle.btn").click(function(){
+					if (!toggled) {
+						$("#leftNav .submenu.toggled").slideUp().removeClass('toggled');
+						$("#leftNav").animate({
+							width: '40px'
+						}, {queue: false});
+						$("#leftNav span").hide();
+						
+						toggled = true;
+						$("#innerContentWrapper").animate({
+							width: ($(window).width() - 40)
+						}, {queue: false});
+					}
+					else
+					{
+						$("#leftNav").animate({
+							width: '251px'
+						}, {
+							complete: function(){
+								$("#leftNav span").show();
+							}
+						});
+						
+						$("#innerContentWrapper").animate({
+							width: ($(window).width() - 251)
+						}, {queue: false});
+						
+						toggled = false;
+					}
+				});
+				
+				$("body").click(function(e){
+					if (!($(e.target).hasClass('dropdown') || $(e.target).parent().hasClass('dropdown') || $(e.target).parent().parent().parent().hasClass('dropdown') || $(e.target).parent().parent().hasClass('dropdown') || $(e.target).hasClass('profilePic') || $(e.target).parent().hasClass('profilePic'))){
+						$("nav .dropdown").hide();
+					}
+					
+					var check = $(e.target).hasClass('notificationbar') || $(e.target).parent().parent().hasClass('notificationbar') || $(e.target).attr('id') == 'notifications' || $(e.target).parent().attr('id') == 'notifications';				
+					if (!check){						
+						e.preventDefault();
+						$(".notificationbar").hide();
+					}
+				
+				
+				});
+				
+				$("#leftNav li").click(function(e){
+					e.preventDefault();
+					if ($(this).children('ul').hasClass('submenu'))
+					{
+						if (!$(this).children('ul').hasClass('toggled')){
+							$("#leftNav ul.toggled").slideToggle().removeClass('toggled');
+						}
+						var submenu = $(this).children('ul');
+						submenu.slideToggle({
+							complete: function()
+							{								
+								if (submenu.css('display') != 'none')
+								{									
+									submenu.addClass("toggled");
+								}	
+								else
+								{
+									submenu.removeClass('toggled')
+								}
+							}
+						});
+						
+					}
+				});
+				
+				$(window).resize(function(){
+					clearTimeout(ResizeID);
+					ResizeID = setTimeout(doneResizing, 500);							
+				});
+				
+				
+				$("#innerContentWrapper").css({
+					width: ($(window).width() - 256)
+				});
+				
+				$("a[data-dismiss]").click(function(e){
+					e.preventDefault();
+					$(this).parent().remove();
+				});
+				
+				$(".submenu li").click(function(e){
+					e.preventDefault();
+					e.stopPropagation();
+					if ($(this).children('a').attr('href') || $(this).children('span').children('a').attr('href')){
+						location.href = $(this).children('a').attr('href');
+					}
+				});			
+				
+		
+				var graph1 = $.plot("#users .chart .innerChart", [d1], { 
+					legend: {
+						show: false
+					},
+					grid: {
+						clickable: true,
+						hoverable: true,
+						borderWidth: 0,
+						tickColor: "#f4f7f9"
+					},
+					colors: ["#f34541", "#49bf67"]					
+				});
+				
+				var graph = $.plot("#visits .chart .innerChart", [d2], { 
+					legend: {
+						show: false
+					},
+					grid: {
+						clickable: true,
+						hoverable: true,
+						borderWidth: 0,
+						tickColor: "#f4f7f9"
+					},
+					colors: ["#f34541", "#49bf67"]					
+				});
+				
+				$(".profilePic").click(function(){
+					$(this).next().toggle();
+				});
+				
+				$("#notifications").click(function(e){
+					if ($(e.target).hasClass('notificationbar')){
+						e.preventDefault();
+					}
+					else
+					{
+						$(this).children(".notificationbar").toggle();
+					}
+				});			
+				
+			});
+			
+			function doneResizing()
+			{	
+			
+				$("#leftNav").css('height', ($(document).height() - 40));
+					
+				$("#innerContentWrapper").css({
+					width: ($(window).width() - 256)
+				});
+				
+				var graph1 = $.plot("#users .chart .innerChart", [d1], { 
+					legend: {
+						show: false
+					},
+					grid: {
+						clickable: true,
+						hoverable: true,
+						borderWidth: 0,
+						tickColor: "#f4f7f9"
+					},
+					colors: ["#f34541", "#49bf67"]					
+					});
+				
+				var graph = $.plot("#visits .chart .innerChart", [d2], { 
+					legend: {
+						show: false
+					},
+					grid: {
+						clickable: true,
+						hoverable: true,
+						borderWidth: 0,
+						tickColor: "#f4f7f9"
+					},
+					colors: ["#f34541", "#49bf67"]					
+				});		
+			}
+		
+		</script>	
+	</head>
+	<body>
+		<nav id="top">
+			<div id="rightcontrols">
+				<div id="search">
+					<form class="navbar-form">
+						<div class="form-group">
+							<input type="text" placeholder="Search..." />
+						</div>
+					</form>
+				</div>
+				<div id="notifications">
+					<span class="icon notifications"></span>
+					<span class="badge">5</span>
+					<div class="notificationbar">
+						
+					
+					</div>
+				</div>
+				<div id="person">
+					<div class="profilePic dark">
+						<img src="userfiles/rsz_chrysanthemum-32.jpg" />
+						<span> username </span>
+						<span class="caret"></span>						
+					</div>
+					<ul class="dropdown"> 
+						<li>
+							<a href="#" class="noUnderLine">
+								<img src="userfiles/rsz_chrysanthemum.jpg" />
+								<span> Username </span>
+							</a>
+						</li>
+						<li>
+							<a href="#"> Edit My Profile </a>						
+						</li> 
+						<li>
+							<a href="#"> Log Out </a>						
+						<li> 
+					</ul>
+				</div>				
+			</div>
+			<div class="menu menu-expand toggle btn">
+				<i class="icon-reorder"></i> 
+			</div>
+		</nav>
+		<div id="mainContent">
+			<div id="leftNav">
+				<ul>
+					<li class="selected">
+						<i class="icon-dashboard"></i>
+						<span> Dashboard </span>
+					</li>
+					<li>
+						<i class="icon-pushpin"></i>
+						<span> 
+							Post's 
+							<i class="icon-angle-down angle-down icon-right"></i>
+						</span>
+						<ul class="submenu">
+							<li>
+								<a href="posts.html"> All posts </a>
+							</li>							
+							<li>
+								<a href="#"> Add New </a>
+							</li>							
+							<li>
+								<a href="#"> Categories </a>
+							</li>
+							<li>
+								<a href="#"> Tags </a>
+							</li>
+							
+							
+						</ul>
+					</li>
+					<li>
+						<i class="icon-group"></i>
+						<span> 
+							Users 
+							<i class="icon-angle-down angle-down icon-right"></i>
+						</span>
+						
+						<ul class="submenu">
+							<li>
+								<a href="users.html"> All users </a>
+							</li>							
+							<li>
+								<a href="#"> Edit New </a>
+							</li>								
+						</ul>
+					</li>
+			
+			</div>
+		
+		
+		</div>	
+			<div id="mainHeader">
+				<div class="header">
+					<i class="icon-dashboard  red"></i>
+					<h2> Dashboard </h2>
+				</div>
+			</div>
+			<section id="innerContentWrapper" class="float left">
+				<div id="innerContent">
+					<div class="user alert alert-dismissable alert-info">
+						<a class="close" data-dismiss="alert" href="#">x</a>
+						 Welcome <strong>Ryan</strong>
+					</div>
+					<div class="row">
+						<div id="users" class="left inline">
+							<div class="group">
+								<div class="groupHeader">
+									<i class="icon-group"></i>
+									<span> Users </span>
+								</div>
+								<div class="chart">
+									<div class="innerChart"></div>							
+								</div>
+							</div>
+						</div>	
+						<div id="visits" class="left inline">
+							<div class="group">
+								<div class="groupHeader">
+									<i class="icon-group"></i>
+									<span> Visits </span>
+								</div>
+								<div class="chart">
+									<div class="innerChart"></div>							
+								</div>
+							</div>
+						</div>	
+					</div>	
+					<span class="block clearfix"></span>
+				</div>
+				<span class="line break block clearfix"></span>
+				<div id="todayInfo">
+					<div class="groupHeader">
+						<i class="icon-group"></i>
+						<span> Visitors </span>
+					</div>
+					<div class="row">
+						<div class="info box static">							
+							<h3> 9100 </h3>
+							<small> UNIQUE </small>											
+							<span class="icon-user float right color red"></span>						
+						</div>
+						
+						<div class="info box static">							
+							<h3> 9100 </h3>
+							<small> average time </small>											
+							<span class="icon-user float right color red"></span>						
+						</div>
+						
+						<div class="info box static">							
+							<h3> 9100 </h3>
+							<small> Page vists </small>											
+							<span class="icon-user float right color red"></span>						
+						</div>
+					</div>				
+				</div>
+				<span class="line break block clearfix"></span>
+			</section>			
+			<footer>
+				<span class="thanks">
+					<p> Thanks For building :) </p>
+				</span>
+			</footer>
+		</div>
+	</body>
+</html>
