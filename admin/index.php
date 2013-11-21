@@ -1,47 +1,40 @@
 <?php
 	include ("classes/viewClass.php");	
-	include ("../config.php");	
+	include ("../../config.php");	
 	$pageInfo;
 	session_start();
-	//var_dump($_SESSION);
+	if (!($_SESSION['username'])){
+		header('location: ../index.php?p=2&return=admin&error=login');
+	}
 	if (isset($_GET['p'])){
 		//page info...
 		$pageInfo = $_GET['p'];
 	} else {
 		$pageInfo = 1;
 	}
-	
 	switch ($pageInfo){
 		case '1':
-			include ('views/home.php'); 
+			include ('views/home.php'); //home page
 			$page = new Page();
 			break;
 		case '2':
-			include ('views/login.php');
+			include ('views/AllPosts.php'); //all posts
 			$page = new Page();
 			break;
 		case '3':
-			include ('views/register.php'); 
+			include ('views/PostsNew.php'); //newposts
 			$page = new Page();
-			break;
+			break;		
 		case '4':
-			include ('views/recover.php');//post categories
+			include ('views/users.php'); //users
 			$page = new Page();
-			break;
+			break;		
 		case '5':
-			//logout
-			session_destroy();
-			unset($_SESSION);
-			header('location: index.php');
+			include ('views/editUser.php'); //edit users
+			$page = new Page();
 			break;
 		case '6':
-			//logout
-			include ('views/posts.php');//post categories
-			$page = new Page();
-			break;
-		case '7':
-			//logout
-			include ('views/search.php');//post categories
+			include ('views/editPost.php'); //edit users
 			$page = new Page();
 			break;
 		default: 
@@ -52,7 +45,6 @@
 	if ($page){
 		$page->displayPage();
 	}
-	
 	
 	
 ?>

@@ -1,0 +1,74 @@
+<?php
+	class Page extends view{
+		function displayContent(){
+			$html = '<div class="mainContent">'."\n";
+			$html .= '<div id="mainHeader">'."\n";
+			$html .= '				<div class="header">'."\n";
+			$html .= '					<i class="icon-dashboard  red"></i>'."\n";
+			$html .= '					<h2> Dashboard </h2>'."\n";
+			$html .= '				</div>'."\n";
+			$html .= '			</div>'."\n";
+			$html .= '			<section id="innerContentWrapper" class="float left">'."\n";
+			$html .= '				<div id="innerContent">'."\n";
+			$html .= '					<div class="user alert alert-dismissable alert-info">'."\n";
+			$html .= '						<a class="close" data-dismiss="alert" href="#">x</a>'."\n";
+			$html .= '						 Welcome <strong>Ryan</strong>'."\n";
+			$html .= '					</div>'."\n";
+			$html .= '					<div class="row">'."\n";
+			$html .= '						<div id="users" class="left inline">'."\n";
+			$html .= '							<div class="group">'."\n";
+			$html .= '								<div class="groupHeader">'."\n";
+			$html .= '									<i class="icon-group"></i>'."\n";
+			$html .= '									<span> Users </span>'."\n";
+			$html .= '								</div>'."\n";
+			$html .= '								<div class="chart">'."\n";
+			$html .= '									<div class="innerChart"></div>'."\n";
+			$html .= '								</div>'."\n";
+			$html .= '							</div>'."\n";
+			$html .= '						</div>'."\n";
+			$html .= '						<div id="visits" class="left inline">'."\n";
+			$html .= '							<div class="group">'."\n";
+			$html .= '								<div class="groupHeader">'."\n";
+			$html .= '									<i class="icon-group"></i>'."\n";
+			$html .= '									<span> Visits </span>'."\n";
+			$html .= '								</div>'."\n";
+			$html .= '								<div class="chart">'."\n";
+			$html .= '									<div class="innerChart"></div>'."\n";
+			$html .= '								</div>'."\n";
+			$html .= '							</div>'."\n";
+			$html .= '						</div>'."\n";
+			$html .= '					</div>'."\n";
+			$html .= '					<span class="block clearfix"></span>'."\n";
+			$html .= '				</div>'."\n";
+			$html .= '				<span class="line break block clearfix"></span>'."\n";
+			$html .= '				<div id="todayInfo">'."\n";
+			$html .= '					<div class="groupHeader">'."\n";
+			$html .= '						<i class="icon-group"></i>'."\n";
+			$html .= '						<span> Visitors </span>'."\n";
+			$html .= '					</div>'."\n";
+			$html .= '					<div class="row">'."\n";
+			$html .= '						<div class="info box static">'."\n";
+			$html .= '							<h3> 9100 </h3>'."\n";
+			$html .= '							<small> UNIQUE </small>'."\n";
+			$html .= '							<span class="icon-user float right color red"></span>'."\n";
+			$html .= '						</div>'."\n";
+			$html .= '						<div class="info box static">'."\n";
+			$html .= '							<h3> 9100 </h3>'."\n";
+			$html .= '							<small> average time </small>'."\n";
+			$html .= '							<span class="icon-user float right color red"></span>'."\n";
+			$html .= '						</div>'."\n";
+			$html .= '						<div class="info box static">'."\n";
+			$html .= '							<h3> 9100 </h3>'."\n";
+			$html .= '							<small> Page vists </small>'."\n";
+			$html .= '							<span class="icon-user float right color red"></span>'."\n";
+			$html .= '						</div>'."\n";
+			$html .= '					</div>'."\n";
+			$html .= '				</div>'."\n";
+			$html .= '				<span class="line break block clearfix"></span>'."\n";
+			$html .= '			</section>'."\n";
+			$html .= '</div>'."\n";
+			$html .= '</div>'."\n";
+			return $html;
+		}
+	}
+?>
