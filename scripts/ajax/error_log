@@ -1,5 +1,0 @@
-[21-Jun-2013 03:21:46] PHP Parse error:  syntax error, unexpected T_VARIABLE in /home/karl/public_html/pcinsight/scripts/ajax/ResubmitsubmitContent.php on line 37
-[21-Jun-2013 03:22:57] PHP Parse error:  syntax error, unexpected T_VARIABLE in /home/karl/public_html/pcinsight/scripts/ajax/ResubmitsubmitContent.php on line 37
-[21-Jun-2013 03:23:36] PHP Parse error:  syntax error, unexpected T_VARIABLE in /home/karl/public_html/pcinsight/scripts/ajax/ResubmitsubmitContent.php on line 37
-[21-Jun-2013 03:24:36] PHP Parse error:  syntax error, unexpected T_VARIABLE in /home/karl/public_html/pcinsight/scripts/ajax/ResubmitsubmitContent.php on line 37
-[21-Jun-2013 03:25:54] PHP Warning:  mysqli_stmt::bind_param() [<a href='mysqli-stmt.bind-param'>mysqli-stmt.bind-param</a>]: Number of elements in type definition string doesn't match number of bind variables in /home/karl/public_html/pcinsight/scripts/ajax/ResubmitsubmitContent.php on line 41
